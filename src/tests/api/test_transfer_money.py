@@ -184,3 +184,20 @@ class TestTransferMoney:
                                                      password=create_user_request.password),
             response_spec=ResponseSpecs.request_returns_bad_request(error_key=error_key, error_value=error_value)
         ).post(transfer_money_request=transfer_money_request)
+
+        # Получение аккаунтов пользователя
+        get_customer_accounts_response = GetCustomerAccountsRequester(
+            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
+                                                     password=create_user_request.password),
+            response_spec=ResponseSpecs.request_returns_ok()
+        ).get()
+
+        assert get_customer_accounts_response.root[0].id == create_account_response_1.id
+        assert get_customer_accounts_response.root[0].accountNumber == create_account_response_1.accountNumber
+        assert get_customer_accounts_response.root[0].balance == 0
+        assert len(get_customer_accounts_response.root[0].transactions) == 0
+
+        assert get_customer_accounts_response.root[1].id == create_account_response_2.id
+        assert get_customer_accounts_response.root[1].accountNumber == create_account_response_2.accountNumber
+        assert get_customer_accounts_response.root[1].balance == 0
+        assert len(get_customer_accounts_response.root[1].transactions) == 0

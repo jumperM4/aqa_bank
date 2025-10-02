@@ -140,3 +140,15 @@ class TestDepositMoney:
                                                      password=create_user_request.password),
             response_spec=ResponseSpecs.request_returns_bad_request(error_key=error_key, error_value=error_value)
         ).post(deposit_account_request=deposit_account_request)
+
+        # Получение аккаунта пользователя
+        get_customer_accounts_response = GetCustomerAccountsRequester(
+            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
+                                                     password=create_user_request.password),
+            response_spec=ResponseSpecs.request_returns_ok()
+        ).get()
+
+        assert get_customer_accounts_response.root[0].id == create_account_response.id
+        assert get_customer_accounts_response.root[0].balance == 0
+        assert get_customer_accounts_response.root[0].accountNumber == create_account_response.accountNumber
+        assert len(get_customer_accounts_response.root[0].transactions) == 0
