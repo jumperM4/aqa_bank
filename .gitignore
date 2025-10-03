@@ -1,0 +1,31 @@
+# Логи
+logs/
+*.log
+
+# Переменные окружения
+.env
+
+# Кэш и временные файлы Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Виртуальные окружения
+venv/
+.env/
+.venv/
+
+# Конфиги и сессии
+*.sqlite3
+*.db
+
+# Docker-артефакты
+*.pid
+*.sock
+
+# IDE и системные файлы
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
