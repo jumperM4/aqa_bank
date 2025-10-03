@@ -1,37 +1,31 @@
 import requests
 import pytest
 
+from src.main.api.classes.api_manager import ApiManager
 from src.main.api.generators.random_data import RandomData
 from src.main.api.models.create_user_request import CreateUserRequest
-from src.main.api.models.login_user_request import LoginUserRequest
 from src.main.api.models.deposit_account_request import DepositAccountRequest
 from src.main.api.requests.admin_user_requester import AdminUserRequester
 from src.main.api.requests.create_account_requester import CreateAccountRequester
 from src.main.api.requests.deposit_account_requester import DepositAccountRequester
 from src.main.api.requests.get_customer_accounts_requester import GetCustomerAccountsRequester
-from src.main.api.requests.login_user_requester import LoginUserRequester
 from src.main.api.specs.request_specs import RequestSpecs
 from src.main.api.specs.response_specs import ResponseSpecs
+from src.main.api.steps.admin_steps import AdminSteps
 
 
 class TestDepositMoney:
+    @pytest.mark.usefixtures('api_manager')
     @pytest.mark.parametrize(
-        argnames='balance',
+        argnames='balance, create_user_request',
         argvalues=[
-            (100)
+            (
+                    100, CreateUserRequest(username=RandomData.get_username(), password=RandomData.get_password(),
+                                           role="USER"))
         ])
-    def test_deposit_money(self, balance: int):
+    def test_deposit_money(self, balance: int, api_manager: ApiManager, create_user_request: CreateUserRequest):
         # Создание пользователя
-        create_user_request = CreateUserRequest(username=RandomData.get_username(),
-                                                password=RandomData.get_password(), role="USER")
-
-        create_user_response = AdminUserRequester(
-            request_spec=RequestSpecs.admin_auth_spec(),
-            response_spec=ResponseSpecs.entity_was_created()
-        ).post(create_user_request=create_user_request)
-
-        assert create_user_response.username == create_user_request.username
-        assert create_user_response.role == create_user_request.role
+        create_user_response = api_manager.admin_steps(user_request=create_user_request)
 
         # # Логин пользователя
         # login_user_request = LoginUserRequest(username=create_user_request.username,
@@ -82,12 +76,6 @@ class TestDepositMoney:
         assert get_customer_accounts_response.root[0].accountNumber == create_account_response.accountNumber
         assert len(get_customer_accounts_response.root[0].transactions) > 0
 
-        # # Удаление пользователя
-        # AdminUserRequester(
-        #     request_spec=RequestSpecs.admin_auth_spec(),
-        #     response_spec=ResponseSpecs.entity_was_deleted()
-        # ).delete(id=create_user_response.id)
-
     @pytest.mark.parametrize(
         argnames='balance, account_id, error_key, error_value',
         argvalues=[
@@ -97,7 +85,7 @@ class TestDepositMoney:
             (0, 1, "", "Invalid account or amount"),
             (-1, 1, "", "Invalid account or amount")
         ])
-    def test_deposit_money_negative(self, balance: int, account_id: int,  error_key: str, error_value: str):
+    def test_deposit_money_negative(self, balance: int, account_id: int, error_key: str, error_value: str):
         # Создание пользователя
         create_user_request = CreateUserRequest(username=RandomData.get_username(),
                                                 password=RandomData.get_password(), role="USER")
