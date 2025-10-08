@@ -4,53 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/nb_bank.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/config.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/configs/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/configs/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/generators/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/generators/random_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/base_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/create_account_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/create_user_request.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/create_user_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/deposit_account_request.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/deposit_account_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/login_user_request.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/login_user_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/transfer_money_request.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/transfer_money_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/update_customer_profile_request.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/models/update_customer_profile_response.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/admin_user_requester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/create_account_requester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/deposit_account_requester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/login_user_requester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/requester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/transfer_money_requester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/requests/update_customer_profile_requester.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/specs/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/specs/request_specs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/api/specs/response_specs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/api/test_change_username.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/api/test_deposit_money_by_user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/api/test_transfer_money.py" afterDir="false" />
+    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="1st commit">
+      <change afterPath="$PROJECT_DIR$/resources/model-comparison.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/fixtures/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/fixtures/api_fixtures.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/fixtures/objects_fixtures.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/fixtures/user_fixtures.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/generators/generating_rule.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/generators/random_model_generator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/models/comparison/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/models/comparison/model_assertions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/models/comparison/model_comparator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/models/comparison/model_comparison_config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/requests/skeleton/requesters/validated_crud_requester.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/api/steps/user_steps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/classes/api_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/classes/api_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/models/create_user_request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/models/create_user_request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/requests/skeleton/endpoint.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/requests/skeleton/endpoint.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/requests/skeleton/http_request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/requests/skeleton/http_request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/requests/skeleton/requesters/crud_requester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/requests/skeleton/requesters/crud_requester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/specs/request_specs.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/specs/request_specs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/steps/admin_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/steps/admin_steps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/steps/base_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/steps/base_steps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/api/test_change_username.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_change_username.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/api/test_deposit_money_by_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_deposit_money_by_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/api/test_transfer_money.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_transfer_money.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +47,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -76,33 +63,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests for deposit_money_by_user_test.TestDepositMoney.test_deposit_money.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_deposit_money.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_change_username.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_deposit_money_by_user.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python.config.executor&quot;: &quot;Run&quot;,
-    &quot;Python.create_user_request.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/PythonProjects/nb_bank/src/main/api/models&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for deposit_money_by_user_test.TestDepositMoney.test_deposit_money.executor": "Run",
+    "Python tests.Python tests for test_change_username.TestChangeUsername.executor": "Run",
+    "Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info.executor": "Run",
+    "Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info_negative.executor": "Run",
+    "Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money.executor": "Run",
+    "Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money_negative.executor": "Run",
+    "Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money.executor": "Run",
+    "Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money_negative.executor": "Run",
+    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_deposit_money.executor": "Run",
+    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money.executor": "Run",
+    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money_negative.executor": "Run",
+    "Python tests.Python tests in test_change_username.py.executor": "Run",
+    "Python tests.Python tests in test_deposit_money_by_user.py.executor": "Run",
+    "Python tests.Python tests in test_transfer_money.py.executor": "Run",
+    "Python.config.executor": "Run",
+    "Python.create_user_request.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "s__level",
+    "last_opened_file_path": "D:/PythonProjects/nb_bank/src/main/api/requests",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PythonProjects\nb_bank\src\main\api\requests" />
       <recent name="D:\PythonProjects\nb_bank\src\main\api\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\PythonProjects\nb_bank\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money">
-    <configuration name="Python tests for src.tests.api.test_deposit_money_by_user.TestDepositMoney.test_deposit_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money">
+    <configuration name="Python tests for test_change_username.TestChangeUsername.test_change_user_info" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,11 +109,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;src.tests.api.test_deposit_money_by_user.TestDepositMoney.test_deposit_money&quot;" />
+      <option name="_new_target" value="&quot;test_change_username.TestChangeUsername.test_change_user_info&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for src.tests.api.test_deposit_money_by_user.TestDepositMoney.test_deposit_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_change_username.TestChangeUsername.test_change_user_info_negative" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -128,22 +124,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;src.tests.api.test_deposit_money_by_user.TestDepositMoney.test_deposit_money&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_change_username.TestChangeUsername.test_deposit_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="nb_bank" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests/api" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_change_username.TestChangeUsername.test_deposit_money&quot;" />
+      <option name="_new_target" value="&quot;test_change_username.TestChangeUsername.test_change_user_info_negative&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -162,7 +143,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_deposit_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_transfer_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -173,17 +154,32 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_deposit_money&quot;" />
+      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_transfer_money&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_transfer_money_negative" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="nb_bank" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests/api" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_transfer_money_negative&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money" />
-        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_deposit_money" />
         <item itemvalue="Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money" />
-        <item itemvalue="Python tests.Python tests for src.tests.api.test_deposit_money_by_user.TestDepositMoney.test_deposit_money" />
-        <item itemvalue="Python tests.Python tests for src.tests.api.test_deposit_money_by_user.TestDepositMoney.test_deposit_money" />
+        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money_negative" />
+        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money" />
+        <item itemvalue="Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info_negative" />
+        <item itemvalue="Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info" />
       </list>
     </recent_temporary>
   </component>
@@ -203,6 +199,46 @@
       <option name="presentableId" value="Default" />
       <updated>1758641268149</updated>
     </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1759072917135</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759072917135</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added negatives, additional checks">
+      <option name="closed" value="true" />
+      <created>1759342881802</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759342881802</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixations v2">
+      <option name="closed" value="true" />
+      <created>1759428839806</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1759428839806</updated>
+    </task>
+    <task id="LOCAL-00004" summary="1st commit">
+      <option name="closed" value="true" />
+      <created>1759517076686</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1759517076686</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <MESSAGE value="added negatives, additional checks" />
+    <MESSAGE value="fixations v2" />
+    <MESSAGE value="1st commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="1st commit" />
   </component>
 </project>

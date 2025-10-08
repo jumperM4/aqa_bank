@@ -11,71 +11,31 @@ from src.main.api.requests.deposit_account_requester import DepositAccountReques
 from src.main.api.requests.get_customer_accounts_requester import GetCustomerAccountsRequester
 from src.main.api.specs.request_specs import RequestSpecs
 from src.main.api.specs.response_specs import ResponseSpecs
-from src.main.api.steps.admin_steps import AdminSteps
 
 
 class TestDepositMoney:
-    @pytest.mark.usefixtures('api_manager')
+    @pytest.mark.usefixtures('api_manager', 'user_request')
     @pytest.mark.parametrize(
-        argnames='balance, create_user_request',
+        argnames='balance',
         argvalues=[
-            (
-                    100, CreateUserRequest(username=RandomData.get_username(), password=RandomData.get_password(),
-                                           role="USER"))
+            (100)
         ])
-    def test_deposit_money(self, balance: int, api_manager: ApiManager, create_user_request: CreateUserRequest):
-        # Создание пользователя
-        create_user_response = api_manager.admin_steps(user_request=create_user_request)
-
-        # # Логин пользователя
-        # login_user_request = LoginUserRequest(username=create_user_request.username,
-        #                                       password=create_user_request.password)
-        #
-        # login_response = LoginUserRequester(
-        #     request_spec=RequestSpecs.unauth_spec(),
-        #     response_spec=ResponseSpecs.request_returns_ok()
-        # ).post(login_user_request=login_user_request)
-        #
-        # assert login_response.username == create_user_request.username
-        # assert login_response.role == create_user_request.role
-        #
+    def test_deposit_money(self, balance: int, api_manager: ApiManager, user_request: CreateUserRequest):
         # Создание аккаунта
-        create_account_response = CreateAccountRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.entity_was_created()
-        ).post()
-
-        assert create_account_response.balance == 0
-        assert not create_account_response.transactions
-        #
+        create_account_response = api_manager.user_steps.create_account(create_user_request=user_request)
         # Депозит аккаунта
-        deposit_account_request = DepositAccountRequest(id=create_account_response.id, balance=balance)
-
-        deposit_account_response = DepositAccountRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.request_returns_ok()
-        ).post(deposit_account_request=deposit_account_request)
-
-        assert deposit_account_response.id == create_account_response.id
-        assert deposit_account_response.balance == balance
-        assert deposit_account_response.transactions
-        assert deposit_account_response.transactions[0].amount == balance
-        assert deposit_account_response.transactions[0].type == 'DEPOSIT'
-
+        deposit_account_response = api_manager.user_steps.deposit_account(create_user_request=user_request,
+                                                                          create_account_response=create_account_response,
+                                                                          balance=balance)
         # Получение аккаунтов пользователя
-        get_customer_accounts_response = GetCustomerAccountsRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.request_returns_ok()
-        ).get()
+        get_user_account_response = api_manager.user_steps.get_user_accounts_after_deposit(
+            create_user_request=user_request,
+            create_account_response=create_account_response,
+            balance=balance,
+            negative=False
+        )
 
-        assert get_customer_accounts_response.root[0].id == create_account_response.id
-        assert get_customer_accounts_response.root[0].balance == balance
-        assert get_customer_accounts_response.root[0].accountNumber == create_account_response.accountNumber
-        assert len(get_customer_accounts_response.root[0].transactions) > 0
-
+    @pytest.mark.usefixtures('api_manager', 'user_request')
     @pytest.mark.parametrize(
         argnames='balance, account_id, error_key, error_value',
         argvalues=[
@@ -85,58 +45,26 @@ class TestDepositMoney:
             (0, 1, "", "Invalid account or amount"),
             (-1, 1, "", "Invalid account or amount")
         ])
-    def test_deposit_money_negative(self, balance: int, account_id: int, error_key: str, error_value: str):
-        # Создание пользователя
-        create_user_request = CreateUserRequest(username=RandomData.get_username(),
-                                                password=RandomData.get_password(), role="USER")
-
-        create_user_response = AdminUserRequester(
-            request_spec=RequestSpecs.admin_auth_spec(),
-            response_spec=ResponseSpecs.entity_was_created()
-        ).post(create_user_request=create_user_request)
-
-        assert create_user_response.username == create_user_request.username
-        assert create_user_response.role == create_user_request.role
-
-        # # Логин пользователя
-        # login_user_request = LoginUserRequest(username=create_user_request.username,
-        #                                       password=create_user_request.password)
-        #
-        # login_response = LoginUserRequester(
-        #     request_spec=RequestSpecs.unauth_spec(),
-        #     response_spec=ResponseSpecs.request_returns_ok()
-        # ).post(login_user_request=login_user_request)
-        #
-        # assert login_response.username == create_user_request.username
-        # assert login_response.role == create_user_request.role
-
+    def test_deposit_money_negative(self,
+                                    api_manager: ApiManager,
+                                    user_request: CreateUserRequest,
+                                    balance: int,
+                                    account_id: [int, float],
+                                    error_key: str,
+                                    error_value: str):
         # Создание аккаунта
-        create_account_response = CreateAccountRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.entity_was_created()
-        ).post()
-
-        assert create_account_response.balance == 0
-        assert not create_account_response.transactions
+        create_account_response = api_manager.user_steps.create_account(create_user_request=user_request)
 
         # Депозит аккаунта
-        deposit_account_request = DepositAccountRequest(id=account_id, balance=balance)
-
-        DepositAccountRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.request_returns_bad_request(error_key=error_key, error_value=error_value)
-        ).post(deposit_account_request=deposit_account_request)
-
-        # Получение аккаунта пользователя
-        get_customer_accounts_response = GetCustomerAccountsRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.request_returns_ok()
-        ).get()
-
-        assert get_customer_accounts_response.root[0].id == create_account_response.id
-        assert get_customer_accounts_response.root[0].balance == 0
-        assert get_customer_accounts_response.root[0].accountNumber == create_account_response.accountNumber
-        assert len(get_customer_accounts_response.root[0].transactions) == 0
+        deposit_account_response = api_manager.user_steps.deposit_account_negative(create_user_request=user_request,
+                                                                                   account_id=account_id,
+                                                                                   balance=balance,
+                                                                                   error_key=error_key,
+                                                                                   error_value=error_value)
+        # Получение аккаунтов пользователя
+        get_user_account_response = api_manager.user_steps.get_user_accounts_after_deposit(
+            create_user_request=user_request,
+            create_account_response=create_account_response,
+            balance=balance,
+            negative=True
+        )

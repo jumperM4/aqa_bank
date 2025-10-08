@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, TypeVar
 
 import requests
 from requests import Response
@@ -8,9 +8,11 @@ from src.main.api.models.base_model import BaseModel
 from src.main.api.requests.skeleton.http_request import HttpRequest
 from src.main.api.requests.skeleton.interfaces.crud_end_interface import CrudEndpointInterface
 
+T = TypeVar('T', bound=BaseModel)
+
 
 class CrudRequester(HttpRequest, CrudEndpointInterface):
-    def post (self, model:  BaseModel) -> Response:
+    def post(self, model: Optional[T] = None) -> Response:
         body = model.model_dump() if model is not None else ''
 
         response = requests.post(
@@ -19,11 +21,23 @@ class CrudRequester(HttpRequest, CrudEndpointInterface):
             json=body
         )
         self.response_spec(response)
+
         return response
 
-    def get(self, id: int): ...
+    def get(self, id: int):
+        ...
 
-    def update(self, model: BaseModel, id: int): ...
+    def update(self, model: BaseModel, id: int = None):
+        body = model.model_dump() if model is not None else ''
+
+        response = requests.put(
+            url=f'{Config.get("server")}{Config.get("api_version")}{self.endpoint.value.url}',
+            headers=self.request_spec,
+            json=body
+        )
+        self.response_spec(response)
+
+        return response
 
     def delete(self, id: int) -> Response:
         response = requests.delete(
@@ -33,3 +47,10 @@ class CrudRequester(HttpRequest, CrudEndpointInterface):
         self.response_spec(response)
         return response
 
+    def get_all(self) -> Response:
+        response = requests.get(
+            url=f'{Config.get("server")}{Config.get("api_version")}{self.endpoint.value.url}',
+            headers=self.request_spec
+        )
+        self.response_spec(response)
+        return response
