@@ -5,7 +5,7 @@ from src.main.api.fixtures.objects_fixtures import *
 import pytest
 from selenium import webdriver
 from selene import browser
-
+from src.main.api.configs.config import Config
 
 @pytest.fixture(scope='function', autouse=True)
 def setup_selenoid():
@@ -24,8 +24,8 @@ def setup_selenoid():
 
     # Конфигурация глобального browser
     browser.config.driver_options = options
-    browser.config.driver_remote_url = 'http://localhost:4444/wd/hub'
-    browser.config.base_url = 'http://192.168.96.1:3000'
+    browser.config.driver_remote_url = Config.get("ui_remote_url")
+    browser.config.base_url = Config.get("ui_base_url")
     browser.config.timeout = 10
 
     yield browser

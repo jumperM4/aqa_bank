@@ -1,18 +1,14 @@
-import time
-
 import pytest
-from selene import browser, be, have, by, query
-from selene.support.shared.jquery_style import s, ss
-from selenium.webdriver.support.select import Select
+from selene import browser, be
 
 from src.main.api.generators.random_model_generator import RandomModelGenerator
 from src.main.api.models.create_user_request import CreateUserRequest
-from src.main.api.requests.skeleton.endpoint import Endpoint
-from src.main.api.requests.skeleton.requesters.validated_crud_requester import ValidatedCrudRequester
-from src.main.api.specs.request_specs import RequestSpecs
-from src.main.api.specs.response_specs import ResponseSpecs
 from src.main.api.steps.admin_steps import AdminSteps
 from src.main.api.steps.user_steps import UserSteps
+from src.main.ui.Pages.BankAlerts import BankAlert
+from src.main.ui.Pages.EditProfilePage import EditProfilePage
+from src.main.ui.Pages.UserDashboard import UserDashboardPage
+from src.tests.ui.BaseUiTest import BaseUiTest
 
 
 class TestUserChangeUsername:
@@ -21,29 +17,26 @@ class TestUserChangeUsername:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
+        # Логин пользователя в UI
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
-        # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        (UserDashboardPage()
+         .open()
+         .clickUserInfo()
+         .get_page(page_class=EditProfilePage)
+         .getEditProfileTitle.should(be.visible)
+         )
 
-        s('//div[@class="user-info"]').click()
-        s('//h1[text()="✏️ Edit Profile"]').should(be.visible)
-        s('//input[@placeholder="Enter new name"]').should(be.visible).set_value("NewName")
-        s('//button[text()="💾 Save Changes"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
-        assert "Name updated successfully!" in alert_text
-        alert.accept()
+        (EditProfilePage()
+         .sendNewNameValue(value="NewName")
+         .clickSaveChangesBtn()
+         .check_alert_msg_and_accept(bank_alert=BankAlert.USERNAME_UPDATED_SUCCESSFULLY)
+         )
 
         browser.driver.refresh()
 
-        #       Проверка что UI изменился
-        new_name = s('//span[@class="user-name"]').get(query.text)
+        # Проверка что UI изменился
+        new_name = EditProfilePage().getUsername()
         assert new_name == "NewName"
 
         # Изменение имени на API
@@ -57,35 +50,30 @@ class TestUserChangeUsername:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
+        # Логин пользователя в UI
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
-        # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        (UserDashboardPage()
+         .open()
+         .clickUserInfo()
+         .get_page(page_class=EditProfilePage)
+         .getEditProfileTitle.should(be.visible)
+         )
 
-        s('//div[@class="user-info"]').click()
-        s('//h1[text()="✏️ Edit Profile"]').should(be.visible)
-        s('//button[text()="💾 Save Changes"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
-        assert "Please enter a valid name." in alert_text
-        alert.accept()
+        (EditProfilePage()
+         .clickSaveChangesBtn()
+         .check_alert_msg_and_accept(bank_alert=BankAlert.USERNAME_FIELD_REQUIRES_VALID_NAME)
+         )
 
         browser.driver.refresh()
 
         # Проверка что UI НЕ изменился
-        new_name = s('//span[@class="user-name"]').get(query.text)
+        new_name = EditProfilePage().getUsername()
         assert new_name == "Noname"
 
         # Проверка изменения имени на API
-        get_customer_profile_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=user_data.username,
-                                                     password=user_data.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.GET_CUSTOMER_PROFILE
-        ).get_all()
+        get_customer_profile_response = UserSteps(created_objects=[]).get_customer_profile_no_asserts(
+            create_user_request=user_data
+        )
+
         assert get_customer_profile_response.name is None

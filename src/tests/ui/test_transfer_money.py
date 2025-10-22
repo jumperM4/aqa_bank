@@ -1,18 +1,13 @@
-import time
-
 import pytest
-from selene import browser, be, have, by
-from selene.support.shared.jquery_style import s, ss
-from selenium.webdriver.support.select import Select
 
 from src.main.api.generators.random_model_generator import RandomModelGenerator
 from src.main.api.models.create_user_request import CreateUserRequest
-from src.main.api.requests.skeleton.endpoint import Endpoint
-from src.main.api.requests.skeleton.requesters.validated_crud_requester import ValidatedCrudRequester
-from src.main.api.specs.request_specs import RequestSpecs
-from src.main.api.specs.response_specs import ResponseSpecs
 from src.main.api.steps.admin_steps import AdminSteps
 from src.main.api.steps.user_steps import UserSteps
+from src.main.ui.Pages.BankAlerts import BankAlert
+from src.main.ui.Pages.TransferPage import TransferPage
+from src.main.ui.Pages.UserDashboard import UserDashboardPage
+from src.tests.ui.BaseUiTest import BaseUiTest
 
 
 class TestTransferMoney:
@@ -21,8 +16,6 @@ class TestTransferMoney:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
 
         # Создание аккаунта 1
         create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
@@ -33,36 +26,26 @@ class TestTransferMoney:
                                                                           create_account_response=create_account_response_1,
                                                                           balance=20)
         # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
-        s('//button[text()="🔄 Make a Transfer"]').click()
-        time.sleep(2)
-        select_element = s('//select[contains(@class, "account-selector")]').should(be.visible).locate()
-        options = Select(select_element).options
-        options[2].click()
+        (UserDashboardPage()
+         .open()
+         .makeTransfer()
+         .get_page(page_class=TransferPage)
+         .chooseSelectElement(index_num=2)
+         .send_recipient_name_value(value="Name")
+         .send_recipient_account_number_value(value=create_account_response_2.accountNumber)
+         .send_amount_value(value=10)
+         .click_confirm_check()
+         .click_send_transfer_btn()
+         )
 
-        s('//input[@placeholder="Enter recipient name"]').send_keys("Name")
-        s('//input[@placeholder="Enter recipient account number"]').send_keys(create_account_response_2.accountNumber)
-        s('//input[@placeholder="Enter amount"]').send_keys(10)
-        s('//input[@id="confirmCheck"]').click()
-        s('//button[text()="🚀 Send Transfer"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
+        _, alert_text = TransferPage().check_alert_msg_and_accept(bank_alert=BankAlert.USER_TRANSFERRED_MONEY_SUCCESSFULLY)
         assert "10" and create_account_response_2.accountNumber in alert_text
-        alert.accept()
 
         # Проверка на уровне API
-        get_user_accounts_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=user_data.username,
-                                                     password=user_data.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.GET_USER_ACCOUNTS
-        ).get_all()
+        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
@@ -77,8 +60,6 @@ class TestTransferMoney:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
 
         # Создание аккаунта 1
         create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
@@ -96,38 +77,28 @@ class TestTransferMoney:
                                                                         message='Transfer successful')
 
         # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
-        s('//button[text()="🔄 Make a Transfer"]').click()
-        s('//button[text()="🔁 Transfer Again"]').click()
-        ss('//li[contains(@class, "list-group-item")]')[1].element('./button[text()="🔁 Repeat"]').click()
+        (UserDashboardPage()
+         .open()
+         .makeTransfer()
+         .get_page(page_class=TransferPage)
+         .click_transfer_again_btn()
+         .choosePreviousTransactionsToRepeat(index_num=1)
+         .getRepeatTransferModalTitle
+         )
 
-        s('//div[text()="🔁 Repeat Transfer"]').should(be.visible)
-        time.sleep(2)
-        select_element = s('//select[contains(@class, "form-control")]').should(be.visible).locate()
-        options = Select(select_element).options
-        options[2].click()
-
-        s('//input[@type="number"]').set_value(5)
-        s('//input[@id="confirmCheck"]').click()
-        s('//button[text()="🚀 Send Transfer"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
-        assert f"Transfer of $5 successful" in alert_text
-        alert.accept()
+        (TransferPage()
+         .chooseModalSelectElement(index_num=2)
+         .send_enter_amount_field_value(value=5)
+         .click_confirm_check()
+         .click_send_transfer_btn()
+         .check_alert_msg_and_accept(bank_alert=BankAlert.USER_TRANSFERRED_MONEY_SUCCESSFULLY_AGAIN)
+         )
 
         # Проверка на уровне API
-        get_user_accounts_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=user_data.username,
-                                                     password=user_data.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.GET_USER_ACCOUNTS
-        ).get_all()
+        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
@@ -142,8 +113,6 @@ class TestTransferMoney:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
 
         # Создание аккаунта 1
         create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
@@ -154,27 +123,19 @@ class TestTransferMoney:
                                                                           create_account_response=create_account_response_1,
                                                                           balance=20)
         # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
-        s('//button[text()="🔄 Make a Transfer"]').click()
-        s('//button[text()="🚀 Send Transfer"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
-        assert "Please fill all fields and confirm." in alert_text
-        alert.accept()
+        (UserDashboardPage()
+         .open()
+         .makeTransfer()
+         .get_page(TransferPage)
+         .click_send_transfer_btn()
+         .check_alert_msg_and_accept(bank_alert=BankAlert.USER_TRANSFERRED_MONEY_WITH_EMPTY_FIELDS)
+         )
 
         # Проверка на уровне API
-        get_user_accounts_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=user_data.username,
-                                                     password=user_data.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.GET_USER_ACCOUNTS
-        ).get_all()
+        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
@@ -189,8 +150,6 @@ class TestTransferMoney:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
 
         # Создание аккаунта 1
         create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
@@ -201,35 +160,23 @@ class TestTransferMoney:
                                                                                  create_account_response=create_account_response_1,
                                                                                  balance=20)
         # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
-        s('//button[text()="🔄 Make a Transfer"]').click()
-        time.sleep(2)
-        select_element = s('//select[contains(@class, "account-selector")]').should(be.visible).locate()
-        options = Select(select_element).options
-        options[2].click()
-
-        s('//input[@placeholder="Enter recipient name"]').send_keys("Name")
-        s('//input[@placeholder="Enter recipient account number"]').send_keys(create_account_response_2.accountNumber)
-        s('//input[@placeholder="Enter amount"]').send_keys(10)
-        s('//button[text()="🚀 Send Transfer"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
-        assert "Please fill all fields and confirm." in alert_text
-        alert.accept()
+        (UserDashboardPage()
+         .open()
+         .makeTransfer()
+         .get_page(page_class=TransferPage)
+         .chooseSelectElement(index_num=2)
+         .send_recipient_name_value(value="Name")
+         .send_recipient_account_number_value(value=create_account_response_2.accountNumber)
+         .send_amount_value(value=10)
+         .click_send_transfer_btn()
+         .check_alert_msg_and_accept(bank_alert=BankAlert.USER_TRANSFERRED_MONEY_WITH_FILLED_FIELDS_AND_NO_CONFIRM_CHECK)
+         )
 
         # Проверка на уровне API
-        get_user_accounts_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=user_data.username,
-                                                     password=user_data.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.GET_USER_ACCOUNTS
-        ).get_all()
+        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
@@ -244,8 +191,6 @@ class TestTransferMoney:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
 
         # Создание аккаунта 1
         create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
@@ -253,46 +198,36 @@ class TestTransferMoney:
         create_account_response_2 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
         # Депозит аккаунта №1
         deposit_account_response = UserSteps(created_objects=[]).deposit_account(create_user_request=user_data,
-                                                                                 create_account_response=create_account_response_1,
+                                                                                 create_account_response=create_account_response_2,
                                                                                  balance=20)
         # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
-        s('//button[text()="🔄 Make a Transfer"]').click()
-        time.sleep(2)
-        select_element = s('//select[contains(@class, "account-selector")]').should(be.visible).locate()
-        options = Select(select_element).options
-        options[1].click()
-
-        s('//input[@placeholder="Enter recipient name"]').send_keys("Name")
-        s('//input[@placeholder="Enter recipient account number"]').send_keys(create_account_response_2.accountNumber)
-        s('//input[@placeholder="Enter amount"]').send_keys(10)
-        s('//input[@id="confirmCheck"]').click()
-        s('//button[text()="🚀 Send Transfer"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
-        assert "Error: Invalid transfer: insufficient funds or invalid accounts" in alert_text
-        alert.accept()
+        (UserDashboardPage()
+         .open()
+         .makeTransfer()
+         .get_page(page_class=TransferPage)
+         .chooseSelectElement(index_num=1)
+         .send_recipient_name_value(value="Name")
+         .send_recipient_account_number_value(value=create_account_response_2.accountNumber)
+         .send_amount_value(value=10)
+         .click_confirm_check()
+         .click_send_transfer_btn()
+         .check_alert_msg_and_accept(bank_alert=BankAlert.USER_TRANSFERRED_INSUFFICIENT_FUNDS)
+         )
 
         # Проверка на уровне API
-        get_user_accounts_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=user_data.username,
-                                                     password=user_data.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.GET_USER_ACCOUNTS
-        ).get_all()
+        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
+        print(get_user_accounts_response.root[0])
+        print(get_user_accounts_response.root[1])
 
-        assert get_user_accounts_response.root[0].id == create_account_response_2.id
-        assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
+        assert get_user_accounts_response.root[0].id == create_account_response_1.id
+        assert get_user_accounts_response.root[0].accountNumber == create_account_response_1.accountNumber
         assert get_user_accounts_response.root[0].balance == 0
 
-        assert get_user_accounts_response.root[1].id == create_account_response_1.id
-        assert get_user_accounts_response.root[1].accountNumber == create_account_response_1.accountNumber
+        assert get_user_accounts_response.root[1].id == create_account_response_2.id
+        assert get_user_accounts_response.root[1].accountNumber == create_account_response_2.accountNumber
         assert get_user_accounts_response.root[1].balance == 20
 
     @pytest.mark.usefixtures('setup_selenoid')
@@ -300,8 +235,6 @@ class TestTransferMoney:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
-        # Логин пользователя
-        auth_header = RequestSpecs.user_auth_spec(user_data.username, user_data.password)
 
         # Создание аккаунта 1
         create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
@@ -319,39 +252,28 @@ class TestTransferMoney:
                                                                                message='Transfer successful')
 
         # Логин пользователем в UI
-        browser.open("/")
-        browser.driver.execute_script(f"window.localStorage.setItem('authToken', '{auth_header['Authorization']}');")
-        browser.open("/dashboard")
+        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
-        s('//button[text()="🔄 Make a Transfer"]').click()
-        s('//button[text()="🔁 Transfer Again"]').click()
-        ss('//li[contains(@class, "list-group-item")]')[1].element('./button[text()="🔁 Repeat"]').click()
+        (UserDashboardPage()
+         .open()
+         .makeTransfer()
+         .get_page(page_class=TransferPage)
+         .click_transfer_again_btn()
+         .choosePreviousTransactionsToRepeat(index_num=1)
+         .getRepeatTransferModalTitle
+         )
 
-        s('//div[text()="🔁 Repeat Transfer"]').should(be.visible)
-        time.sleep(2)
-        select_element = s('//select[contains(@class, "form-control")]').should(be.visible).locate()
-        options = Select(select_element).options
-        print(options[1])
-        options[1].click()
-
-        s('//input[@type="number"]').set_value(0)
-        s('//input[@id="confirmCheck"]').click()
-        s('//button[text()="🚀 Send Transfer"]').click()
-
-        time.sleep(1)
-        alert = browser.driver.switch_to.alert
-        alert_text = alert.text
-        assert "Transfer failed: Please try again." in alert_text
-        alert.accept()
+        (TransferPage()
+         .chooseModalSelectElement(index_num=1)
+         .send_enter_amount_field_value(value=0)
+         .click_confirm_check()
+         .click_send_transfer_btn()
+         .check_alert_msg_and_accept(bank_alert=BankAlert.USER_TRANSFERRED_MONEY_AGAIN_FAILED)
+         )
 
         # Проверка на уровне API
-        get_user_accounts_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=user_data.username,
-                                                     password=user_data.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.GET_USER_ACCOUNTS
-        ).get_all()
+        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
