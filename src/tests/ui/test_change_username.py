@@ -8,6 +8,7 @@ from src.main.api.steps.user_steps import UserSteps
 from src.main.ui.Pages.BankAlerts import BankAlert
 from src.main.ui.Pages.EditProfilePage import EditProfilePage
 from src.main.ui.Pages.UserDashboard import UserDashboardPage
+from src.main.ui.test_data.ui_test_data import UserTestData
 from src.tests.ui.BaseUiTest import BaseUiTest
 
 
@@ -28,7 +29,7 @@ class TestUserChangeUsername:
          )
 
         (EditProfilePage()
-         .sendNewNameValue(value="NewName")
+         .sendNewNameValue(value=UserTestData.NEW_USERNAME)
          .clickSaveChangesBtn()
          .check_alert_msg_and_accept(bank_alert=BankAlert.USERNAME_UPDATED_SUCCESSFULLY)
          )
@@ -37,12 +38,12 @@ class TestUserChangeUsername:
 
         # Проверка что UI изменился
         new_name = EditProfilePage().getUsername()
-        assert new_name == "NewName"
+        assert new_name == UserTestData.NEW_USERNAME
 
         # Изменение имени на API
         get_customer_profile_response = UserSteps(created_objects=[]).get_customer_profile(
             create_user_request=user_data,
-            new_name="NewName"
+            new_name=UserTestData.NEW_USERNAME
         )
 
     @pytest.mark.usefixtures('setup_selenoid')

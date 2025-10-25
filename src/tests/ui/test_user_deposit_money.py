@@ -2,6 +2,7 @@ import pytest
 
 from src.main.api.generators.random_model_generator import RandomModelGenerator
 from src.main.api.models.create_user_request import CreateUserRequest
+from src.main.api.models.deposit_account_request import DepositAccountRequest
 from src.main.api.steps.admin_steps import AdminSteps
 from src.main.api.steps.user_steps import UserSteps
 from src.main.ui.Pages.BankAlerts import BankAlert
@@ -16,6 +17,10 @@ class TestUserDepositMoney:
         # Создали пользователя
         user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
         new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
+
+        # Генерируем сумму депозита
+        deposit_amount: DepositAccountRequest = RandomModelGenerator.generate(DepositAccountRequest)
+
         # Логин пользователя
         BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
@@ -33,15 +38,16 @@ class TestUserDepositMoney:
          .depositMoney()
          .get_page(DepositPage)
          .chooseSelectElement(index_num=1)
-         .send_amount_value(value="10")).click_deposit_btn())
+         .send_amount_value(value=deposit_amount.balance)).click_deposit_btn())
 
         _, alert_text_2 = UserDashboardPage().check_alert_msg_and_accept(bank_alert=BankAlert.USER_DEPOSITED_SUCCESSFULLY)
-        assert "10" and acc_number in alert_text_2
+        assert deposit_amount.balance and acc_number in alert_text_2
 
         # Проверка на уровне API
         get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
-        assert get_user_accounts_response[0]["accountNumber"] == acc_number
-        assert get_user_accounts_response[0]["balance"] == 10
+        print(222, get_user_accounts_response)
+        assert get_user_accounts_response.root[0].accountNumber == acc_number
+        assert get_user_accounts_response.root[0].balance == deposit_amount.balance
 
     @pytest.mark.usefixtures('setup_selenoid')
     def test_negative_user_has_no_account_deposit_money(self):
@@ -90,5 +96,5 @@ class TestUserDepositMoney:
         # Проверка на уровне API
         get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
 
-        assert get_user_accounts_response[0]["balance"] == 0
-        assert len(get_user_accounts_response[0]["transactions"]) == 0
+        assert get_user_accounts_response.root[0].balance == 0
+        assert len(get_user_accounts_response.root[0].transactions) == 0
