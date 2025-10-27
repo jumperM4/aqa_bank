@@ -1,10 +1,8 @@
 import pytest
-from selene import browser, be, have, by
-from selene.support.shared.jquery_style import s, ss
+from selene import browser, be
 
 from src.main.api.generators.random_model_generator import RandomModelGenerator
 from src.main.api.models.create_user_request import CreateUserRequest
-from src.main.api.steps.admin_steps import AdminSteps
 from src.main.ui.Pages.AdminPanel import AdminPanelPage
 from src.main.ui.Pages.BankAlerts import BankAlert
 from src.main.ui.Pages.LoginPage import LoginPage
@@ -21,11 +19,12 @@ class TestCreateUser:
          .getAdminPanelTitle.should(be.visible))
 
         new_user: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
-        ((AdminPanelPage()
-         .open()
-         .create_user(username=new_user.username, password=new_user.password)
-         .check_alert_msg_and_accept(bank_alert=BankAlert.USER_CREATED_SUCCESFULLY))
-         .getAllUsers()).element_by(have.text(new_user.username)).should(be.visible)
+        AdminPanelPage().open().create_user(username=new_user.username, password=new_user.password).check_alert_msg_and_accept(bank_alert=BankAlert.USER_CREATED_SUCCESFULLY)
+        browser.driver.refresh()
+        user = AdminPanelPage().getUserAt(index=-1)
+
+        assert user.username == new_user.username
+        assert user.role == new_user.role
 
         # Проверка, что user создался на API
     #

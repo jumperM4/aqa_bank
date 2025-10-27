@@ -12,8 +12,8 @@ T = TypeVar('T', bound='BasePage')
 
 
 class BasePage(ABC):
-    __usernameInput = s('[placeholder="Username"]')
-    __passwordInput = s('[placeholder="Password"]')
+    _usernameInput = s('[placeholder="Username"]')
+    _passwordInput = s('[placeholder="Password"]')
 
     @abstractmethod
     def url(self) -> str: ...

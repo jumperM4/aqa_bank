@@ -11,7 +11,7 @@ class LoginPage(BasePage):
         return "/login"
 
     def login(self, username: str, password: str):
-        self.__usernameInput.set_value(username)
-        self.__passwordInput.set_value(password)
+        self._usernameInput.set_value(username)
+        self._passwordInput.set_value(password)
         self.__login_btn.click()
         return self

@@ -58,8 +58,8 @@ def authenticated_user(setup_selenoid, created_user) -> Tuple:
     return user_data, new_user
 
 
-@pytest.fixture(autouse=True)
-def setup_user_session(request):
+@pytest.fixture
+def setup_user_session(request, setup_selenoid):
     """
     Автоматически выполняется только для тестов с маркером @pytest.mark.user_session.
     НЕ выполняется для тестов, использующих authenticated_user или created_user.
@@ -81,11 +81,12 @@ def setup_user_session(request):
         user_count = marker.kwargs.get('count', 1)
 
         # Убедимся, что setup_selenoid выполнился
-        browser_fixture = request.getfixturevalue('setup_selenoid')
+        # Тест знает о setup_selenoid через вызов request.getfixturevalue('setup_selenoid') внутри setup_user_session,
+        # который запускается автоматически благодаря autouse=True.
+        # browser_fixture = request.getfixturevalue('setup_selenoid')
 
         # Очищаем хранилище перед каждым тестом
         SessionStorage.clear()
-
         # Создаем список пользователей
         users: List[CreateUserRequest] = []
 
@@ -106,3 +107,24 @@ def setup_user_session(request):
 
     # Teardown: очищаем после теста (опционально)
     # SessionStorage.clear()
+
+
+def pytest_runtest_setup(item):
+
+    marker = item.get_closest_marker('browsers')
+
+    if marker is not None:
+        allowed_browsers = marker.args[0] if marker.args else []
+        current_browser = Config.get("browser")
+
+        matches = current_browser in allowed_browsers
+
+        if not matches:
+            reason = (
+                f"Тест пропущен, так как текущий браузер '{current_browser}' "
+                f"не находится в списке допустимых браузеров для теста: {allowed_browsers}"
+            )
+            pytest.skip(reason)
+        else:
+            # Тест enabled - можем залогировать
+            print(f"Текущий браузер '{current_browser}' удовлетворяет условиям")
