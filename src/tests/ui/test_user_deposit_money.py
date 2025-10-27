@@ -1,6 +1,8 @@
 import pytest
 
 from src.main.common.storage.SessionStorage import SessionStorage
+from src.main.api.generators.random_model_generator import RandomModelGenerator
+from src.main.api.models.deposit_account_request import DepositAccountRequest
 from src.main.ui.Pages.BankAlerts import BankAlert
 from src.main.ui.Pages.DepositPage import DepositPage
 from src.main.ui.Pages.UserDashboard import UserDashboardPage
@@ -17,6 +19,9 @@ class TestUserDepositMoney:
         user_steps = SessionStorage.get_steps(0)
         # user_data, new_user = authenticated_user
 
+        # Генерируем сумму депозита
+        deposit_amount: DepositAccountRequest = RandomModelGenerator.generate(DepositAccountRequest)
+
         # Процесс депозита
         (UserDashboardPage()
          .open()
@@ -31,10 +36,10 @@ class TestUserDepositMoney:
          .depositMoney()
          .get_page(DepositPage)
          .chooseSelectElement(index_num=1)
-         .send_amount_value(value="10")).click_deposit_btn())
+         .send_amount_value(value=deposit_amount.balance)).click_deposit_btn())
 
         _, alert_text_2 = UserDashboardPage().check_alert_msg_and_accept(bank_alert=BankAlert.USER_DEPOSITED_SUCCESSFULLY)
-        assert "10" and acc_number in alert_text_2
+        assert deposit_amount.balance and acc_number in alert_text_2
 
         # Проверка на уровне API
         get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
