@@ -1,32 +1,28 @@
 import pytest
 
-from src.main.api.generators.random_model_generator import RandomModelGenerator
-from src.main.api.models.create_user_request import CreateUserRequest
-from src.main.api.steps.admin_steps import AdminSteps
-from src.main.api.steps.user_steps import UserSteps
+from src.main.common.storage.SessionStorage import SessionStorage
 from src.main.ui.Pages.BankAlerts import BankAlert
 from src.main.ui.Pages.TransferPage import TransferPage
 from src.main.ui.Pages.UserDashboard import UserDashboardPage
-from src.tests.ui.BaseUiTest import BaseUiTest
 
 
 class TestTransferMoney:
-    @pytest.mark.usefixtures('setup_selenoid')
+    @pytest.mark.browsers(["chrome"])
+    @pytest.mark.usefixtures('setup_user_session')
+    @pytest.mark.user_session(count=1)
     def test_user_new_transfer_money(self):
-        # Создали пользователя
-        user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
-        new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
+        # Получаем первого пользователя из SessionStorage
+        user_data = SessionStorage.get_user(0)
+        user_steps = SessionStorage.get_steps(0)
 
         # Создание аккаунта 1
-        create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_1 = user_steps.create_account(create_user_request=user_data)
         # Создание аккаунта 2
-        create_account_response_2 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_2 = user_steps.create_account(create_user_request=user_data)
         # Депозит аккаунта №1
-        deposit_account_response = UserSteps(created_objects=[]).deposit_account(create_user_request=user_data,
+        deposit_account_response = user_steps.deposit_account(create_user_request=user_data,
                                                                           create_account_response=create_account_response_1,
                                                                           balance=20)
-        # Логин пользователем в UI
-        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
         (UserDashboardPage()
@@ -45,7 +41,7 @@ class TestTransferMoney:
         assert "10" and create_account_response_2.accountNumber in alert_text
 
         # Проверка на уровне API
-        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
+        get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
@@ -55,29 +51,28 @@ class TestTransferMoney:
         assert get_user_accounts_response.root[1].accountNumber == create_account_response_1.accountNumber
         assert get_user_accounts_response.root[1].balance == 10
 
-    @pytest.mark.usefixtures('setup_selenoid')
+    @pytest.mark.browsers(["chrome"])
+    @pytest.mark.usefixtures('setup_user_session')
+    @pytest.mark.user_session(count=1)
     def test_user_again_transfer_money(self):
-        # Создали пользователя
-        user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
-        new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
+        # Получаем первого пользователя из SessionStorage
+        user_data = SessionStorage.get_user(0)
+        user_steps = SessionStorage.get_steps(0)
 
         # Создание аккаунта 1
-        create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_1 = user_steps.create_account(create_user_request=user_data)
         # Создание аккаунта 2
-        create_account_response_2 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_2 = user_steps.create_account(create_user_request=user_data)
         # Депозит аккаунта №1
-        deposit_account_response = UserSteps(created_objects=[]).deposit_account(create_user_request=user_data,
+        deposit_account_response = user_steps.deposit_account(create_user_request=user_data,
                                                                                  create_account_response=create_account_response_1,
                                                                                  balance=20)
         # Перевод с аккаунта номер 1 на аккаунт номер 2
-        transfer_money_response = UserSteps(created_objects=[]).transfer_money(create_user_request=user_data,
+        transfer_money_response = user_steps.transfer_money(create_user_request=user_data,
                                                                         sender_id=create_account_response_1.id,
                                                                         receiver_id=create_account_response_2.id,
                                                                         amount=5,
                                                                         message='Transfer successful')
-
-        # Логин пользователем в UI
-        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
         (UserDashboardPage()
@@ -98,7 +93,7 @@ class TestTransferMoney:
          )
 
         # Проверка на уровне API
-        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
+        get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
@@ -108,22 +103,22 @@ class TestTransferMoney:
         assert get_user_accounts_response.root[1].accountNumber == create_account_response_1.accountNumber
         assert get_user_accounts_response.root[1].balance == 15
 
-    @pytest.mark.usefixtures('setup_selenoid')
+    @pytest.mark.browsers(["chrome"])
+    @pytest.mark.usefixtures('setup_user_session')
+    @pytest.mark.user_session(count=1)
     def test_negative_user_new_transfer_money_empty_fields(self):
-        # Создали пользователя
-        user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
-        new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
+        # Получаем первого пользователя из SessionStorage
+        user_data = SessionStorage.get_user(0)
+        user_steps = SessionStorage.get_steps(0)
 
         # Создание аккаунта 1
-        create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_1 = user_steps.create_account(create_user_request=user_data)
         # Создание аккаунта 2
-        create_account_response_2 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_2 = user_steps.create_account(create_user_request=user_data)
         # Депозит аккаунта №1
-        deposit_account_response = UserSteps(created_objects=[]).deposit_account(create_user_request=user_data,
+        deposit_account_response = user_steps.deposit_account(create_user_request=user_data,
                                                                           create_account_response=create_account_response_1,
                                                                           balance=20)
-        # Логин пользователем в UI
-        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
         (UserDashboardPage()
@@ -135,32 +130,32 @@ class TestTransferMoney:
          )
 
         # Проверка на уровне API
-        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
+        get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
 
-        assert get_user_accounts_response.root[0].id == create_account_response_2.id
-        assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
-        assert get_user_accounts_response.root[0].balance == 0
+        assert get_user_accounts_response.root[0].id == create_account_response_1.id
+        assert get_user_accounts_response.root[0].accountNumber == create_account_response_1.accountNumber
+        assert get_user_accounts_response.root[0].balance == 20
 
-        assert get_user_accounts_response.root[1].id == create_account_response_1.id
-        assert get_user_accounts_response.root[1].accountNumber == create_account_response_1.accountNumber
-        assert get_user_accounts_response.root[1].balance == 20
+        assert get_user_accounts_response.root[1].id == create_account_response_2.id
+        assert get_user_accounts_response.root[1].accountNumber == create_account_response_2.accountNumber
+        assert get_user_accounts_response.root[1].balance == 0
 
-    @pytest.mark.usefixtures('setup_selenoid')
+    @pytest.mark.browsers(["chrome"])
+    @pytest.mark.usefixtures('setup_user_session')
+    @pytest.mark.user_session(count=1)
     def test_negative_user_new_transfer_money_no_confirm_check(self):
-        # Создали пользователя
-        user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
-        new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
+        # Получаем первого пользователя из SessionStorage
+        user_data = SessionStorage.get_user(0)
+        user_steps = SessionStorage.get_steps(0)
 
         # Создание аккаунта 1
-        create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_1 = user_steps.create_account(create_user_request=user_data)
         # Создание аккаунта 2
-        create_account_response_2 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_2 = user_steps.create_account(create_user_request=user_data)
         # Депозит аккаунта №1
-        deposit_account_response = UserSteps(created_objects=[]).deposit_account(create_user_request=user_data,
+        deposit_account_response = user_steps.deposit_account(create_user_request=user_data,
                                                                                  create_account_response=create_account_response_1,
                                                                                  balance=20)
-        # Логин пользователем в UI
-        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
         (UserDashboardPage()
@@ -176,32 +171,32 @@ class TestTransferMoney:
          )
 
         # Проверка на уровне API
-        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
+        get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
 
-        assert get_user_accounts_response.root[0].id == create_account_response_2.id
-        assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber
-        assert get_user_accounts_response.root[0].balance == 0
+        assert get_user_accounts_response.root[0].id == create_account_response_1.id
+        assert get_user_accounts_response.root[0].accountNumber == create_account_response_1.accountNumber
+        assert get_user_accounts_response.root[0].balance == 20
 
-        assert get_user_accounts_response.root[1].id == create_account_response_1.id
-        assert get_user_accounts_response.root[1].accountNumber == create_account_response_1.accountNumber
-        assert get_user_accounts_response.root[1].balance == 20
+        assert get_user_accounts_response.root[1].id == create_account_response_2.id
+        assert get_user_accounts_response.root[1].accountNumber == create_account_response_2.accountNumber
+        assert get_user_accounts_response.root[1].balance == 0
 
-    @pytest.mark.usefixtures('setup_selenoid')
+    @pytest.mark.browsers(["chrome"])
+    @pytest.mark.usefixtures('setup_user_session')
+    @pytest.mark.user_session(count=1)
     def test_negative_user_new_transfer_insufficient_funds(self):
-        # Создали пользователя
-        user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
-        new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
+        # Получаем первого пользователя из SessionStorage
+        user_data = SessionStorage.get_user(0)
+        user_steps = SessionStorage.get_steps(0)
 
         # Создание аккаунта 1
-        create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_1 = user_steps.create_account(create_user_request=user_data)
         # Создание аккаунта 2
-        create_account_response_2 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_2 = user_steps.create_account(create_user_request=user_data)
         # Депозит аккаунта №1
-        deposit_account_response = UserSteps(created_objects=[]).deposit_account(create_user_request=user_data,
+        deposit_account_response = user_steps.deposit_account(create_user_request=user_data,
                                                                                  create_account_response=create_account_response_2,
                                                                                  balance=20)
-        # Логин пользователем в UI
-        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
         (UserDashboardPage()
@@ -218,9 +213,7 @@ class TestTransferMoney:
          )
 
         # Проверка на уровне API
-        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
-        print(get_user_accounts_response.root[0])
-        print(get_user_accounts_response.root[1])
+        get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_1.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_1.accountNumber
@@ -230,29 +223,28 @@ class TestTransferMoney:
         assert get_user_accounts_response.root[1].accountNumber == create_account_response_2.accountNumber
         assert get_user_accounts_response.root[1].balance == 20
 
-    @pytest.mark.usefixtures('setup_selenoid')
+    @pytest.mark.browsers(["chrome"])
+    @pytest.mark.usefixtures('setup_user_session')
+    @pytest.mark.user_session(count=1)
     def test_negative_user_again_transfer_money_empty_amount_field(self):
-        # Создали пользователя
-        user_data: CreateUserRequest = RandomModelGenerator.generate(CreateUserRequest)
-        new_user = AdminSteps(created_objects=[]).create_user(user_request=user_data)
+        # Получаем первого пользователя из SessionStorage
+        user_data = SessionStorage.get_user(0)
+        user_steps = SessionStorage.get_steps(0)
 
         # Создание аккаунта 1
-        create_account_response_1 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_1 = user_steps.create_account(create_user_request=user_data)
         # Создание аккаунта 2
-        create_account_response_2 = UserSteps(created_objects=[]).create_account(create_user_request=user_data)
+        create_account_response_2 = user_steps.create_account(create_user_request=user_data)
         # Депозит аккаунта №1
-        deposit_account_response = UserSteps(created_objects=[]).deposit_account(create_user_request=user_data,
+        deposit_account_response = user_steps.deposit_account(create_user_request=user_data,
                                                                                  create_account_response=create_account_response_1,
                                                                                  balance=20)
         # Перевод с аккаунта номер 1 на аккаунт номер 2
-        transfer_money_response = UserSteps(created_objects=[]).transfer_money(create_user_request=user_data,
+        transfer_money_response = user_steps.transfer_money(create_user_request=user_data,
                                                                                sender_id=create_account_response_1.id,
                                                                                receiver_id=create_account_response_2.id,
                                                                                amount=5,
                                                                                message='Transfer successful')
-
-        # Логин пользователем в UI
-        BaseUiTest().authAsUser(username=user_data.username, password=user_data.password)
 
         # Перевод денег
         (UserDashboardPage()
@@ -273,7 +265,7 @@ class TestTransferMoney:
          )
 
         # Проверка на уровне API
-        get_user_accounts_response = UserSteps(created_objects=[]).get_user_accounts(create_user_request=user_data)
+        get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].id == create_account_response_2.id
         assert get_user_accounts_response.root[0].accountNumber == create_account_response_2.accountNumber

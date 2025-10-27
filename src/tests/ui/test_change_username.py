@@ -1,16 +1,11 @@
 import pytest
 from selene import browser, be
 
-from src.main.api.generators.random_model_generator import RandomModelGenerator
-from src.main.api.models.create_user_request import CreateUserRequest
-from src.main.api.steps.admin_steps import AdminSteps
-from src.main.api.steps.user_steps import UserSteps
 from src.main.common.storage.SessionStorage import SessionStorage
 from src.main.ui.Pages.BankAlerts import BankAlert
 from src.main.ui.Pages.EditProfilePage import EditProfilePage
 from src.main.ui.Pages.UserDashboard import UserDashboardPage
 from src.main.ui.test_data.ui_test_data import UserTestData
-from src.tests.ui.BaseUiTest import BaseUiTest
 
 
 class TestUserChangeUsername:

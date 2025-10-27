@@ -11,7 +11,7 @@ from src.main.ui.Pages.UserDashboard import UserDashboardPage
 class TestUserDepositMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
-    @pytest.mark.user_session(count=1)
+    @pytest.mark.user_session(count=2)
     # @pytest.mark.usefixtures('authenticated_user')
     def test_user_deposit_money(self):
         # Получаем первого пользователя из SessionStorage
@@ -45,7 +45,7 @@ class TestUserDepositMoney:
         get_user_accounts_response = user_steps.get_user_accounts(create_user_request=user_data)
 
         assert get_user_accounts_response.root[0].accountNumber == acc_number
-        assert get_user_accounts_response.root[0].balance == 10
+        assert get_user_accounts_response.root[0].balance == deposit_amount.balance
 
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
