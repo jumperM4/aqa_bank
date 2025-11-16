@@ -31,6 +31,13 @@ class RequestSpecs:
 
     @staticmethod
     def user_auth_spec(username: str, password: str):
+        headers = RequestSpecs.default_req_headers()
+        auth_header = RequestSpecs.getUserAuthHeader(username=username, password=password)
+        headers['Authorization'] = auth_header
+        return headers
+
+    @staticmethod
+    def getUserAuthHeader(username: str, password: str) -> str:
         try:
             response = CrudRequester(
                 RequestSpecs.unauth_spec(),
@@ -41,6 +48,5 @@ class RequestSpecs:
             logging.error(f'Authentication failed for {username} with status {response.status_code}')
             raise Exception('Failed to auth user')
         else:
-            headers = RequestSpecs.default_req_headers()
-            headers['Authorization'] = response.headers.get('Authorization')
-            return headers
+            auth_header = response.headers.get('Authorization')
+            return auth_header

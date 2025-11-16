@@ -1,6 +1,5 @@
 from typing import Type
 
-from src.main.api.generators.random_model_generator import RandomModelGenerator
 from src.main.api.models.comparison.model_assertions import ModelAssertions
 from src.main.api.models.create_user_request import CreateUserRequest
 from src.main.api.models.deposit_account_request import DepositAccountRequest
@@ -15,7 +14,6 @@ from src.main.api.models.transfer_money_response import TransferMoneyResponse
 from src.main.api.models.update_customer_profile_request import UpdateCustomerProfileRequest
 from src.main.api.models.update_customer_profile_response import UpdateCustomerProfileResponse
 from src.main.api.requests.skeleton.endpoint import Endpoint
-from src.main.api.requests.skeleton.requesters.crud_requester import CrudRequester
 from src.main.api.requests.skeleton.requesters.validated_crud_requester import ValidatedCrudRequester
 from src.main.api.specs.request_specs import RequestSpecs
 from src.main.api.specs.response_specs import ResponseSpecs
@@ -95,6 +93,17 @@ class UserSteps(BaseSteps):
         else:
             assert get_user_accounts_response.root[0].balance == balance
             assert len(get_user_accounts_response.root[0].transactions) > 0
+        return get_user_accounts_response
+
+    def get_user_accounts(self,
+                          create_user_request: CreateUserRequest,
+                          ) -> GetCustomerAccountsResponse:
+        get_user_accounts_response = ValidatedCrudRequester(
+            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
+                                                     password=create_user_request.password),
+            response_spec=ResponseSpecs.request_returns_ok(),
+            endpoint=Endpoint.GET_USER_ACCOUNTS
+        ).get_all()
         return get_user_accounts_response
 
     def transfer_money(self, create_user_request: CreateUserRequest, sender_id: int, receiver_id: int, amount: int, message: str) -> \
@@ -196,3 +205,13 @@ class UserSteps(BaseSteps):
 
         assert get_customer_profile_response.name == new_name
         return GetCustomerProfileResponse
+
+    def get_customer_profile_no_asserts(self, create_user_request: CreateUserRequest) -> Type[GetCustomerProfileResponse]:
+        get_customer_profile_response = ValidatedCrudRequester(
+            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
+                                                     password=create_user_request.password),
+            response_spec=ResponseSpecs.request_returns_ok(),
+            endpoint=Endpoint.GET_CUSTOMER_PROFILE
+        ).get_all()
+
+        return get_customer_profile_response

@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Any
 
@@ -21,4 +22,19 @@ class Config:
 
     @staticmethod
     def get(key: str, default_value: Any = None) -> Any:
+        # ПРИОРИТЕТ 1 - это системное свойство baseApiUrl = BASEAPIURL
+        system_value = os.getenv(key)
+
+        if system_value is not None:
+            return system_value
+
+        # ПРИОРИТЕТ 2 - это переменная окружения baseApiUrl - BASEAPIURL
+        # admin.username -> ADMIN_USERNAME
+        env_key = key.replace('.', '_').upper()
+        env_value = os.getenv(env_key)
+
+        if env_value is not None:
+            return env_value
+
+        # ПРИОРИТЕТ 3 - это config.properties
         return Config()._properties.get(key, default_value)

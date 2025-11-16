@@ -19,6 +19,7 @@ from src.main.api.specs.response_specs import ResponseSpecs
 
 class TestTransferMoney:
     @pytest.mark.usefixtures('api_manager', 'user_request')
+    @pytest.mark.api
     @pytest.mark.parametrize(
         argnames='amount, message, balance',
         argvalues=[
@@ -54,6 +55,7 @@ class TestTransferMoney:
 
 
     @pytest.mark.usefixtures('api_manager', 'user_request')
+    @pytest.mark.api
     @pytest.mark.parametrize(
         argnames='sender_acc_id, receiver_acc_id, amount, balance, error_key, error_value',
         argvalues=[
