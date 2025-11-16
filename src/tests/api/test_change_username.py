@@ -1,19 +1,16 @@
+import os
+
 import requests
 import pytest
 
 from src.main.api.classes.api_manager import ApiManager
-from src.main.api.generators.random_data import RandomData
+from src.main.api.configs.config import Config
 from src.main.api.models.create_user_request import CreateUserRequest
-from src.main.api.models.update_customer_profile_request import UpdateCustomerProfileRequest
-from src.main.api.requests.admin_user_requester import AdminUserRequester
-from src.main.api.requests.get_customer_profile_requester import GetCustomerProfileRequester
-from src.main.api.requests.update_customer_profile_requester import UpdateCustomerProfileRequester
-from src.main.api.specs.request_specs import RequestSpecs
-from src.main.api.specs.response_specs import ResponseSpecs
 
 
 class TestChangeUsername:
     @pytest.mark.usefixtures('api_manager', 'user_request')
+    @pytest.mark.api
     @pytest.mark.parametrize(
         argnames="new_name, message",
         argvalues=[
@@ -34,6 +31,7 @@ class TestChangeUsername:
         )
 
     @pytest.mark.usefixtures('api_manager', 'user_request')
+    @pytest.mark.api
     @pytest.mark.parametrize(
         argnames="new_name, error_key, error_value",
         argvalues=[

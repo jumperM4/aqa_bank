@@ -12,6 +12,7 @@ class TestUserChangeUsername:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_user_change_username(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
@@ -45,6 +46,7 @@ class TestUserChangeUsername:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_user_change_username_empty_value(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)

@@ -10,6 +10,7 @@ from src.main.ui.Pages.LoginPage import LoginPage
 
 class TestCreateUser:
     @pytest.mark.usefixtures('setup_selenoid')
+    @pytest.mark.ui
     def test_admin_can_create_user(self):
         admin_username, admin_password = CreateUserRequest.getAdmin()
         (LoginPage()

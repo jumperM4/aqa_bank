@@ -12,6 +12,7 @@ class TestUserDepositMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=2)
+    @pytest.mark.ui
     # @pytest.mark.usefixtures('authenticated_user')
     def test_user_deposit_money(self):
         # Получаем первого пользователя из SessionStorage
@@ -50,6 +51,7 @@ class TestUserDepositMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_negative_user_has_no_account_deposit_money(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
@@ -73,6 +75,7 @@ class TestUserDepositMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_negative_user_deposit_0_money(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)

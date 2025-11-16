@@ -4,9 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="1st commit - ui_m">
+    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="2st commit - ui_s">
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/config/browsers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/config/frontend-nginx.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/config/nginx.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/desc.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/docker-compose.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/restart_docker.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/run-tests-with-docker-compose.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/push-tests.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run-tests.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/configs/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/configs/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/fixtures/objects_fixtures.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/fixtures/objects_fixtures.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/api/test_change_username.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_change_username.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/api/test_deposit_money_by_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_deposit_money_by_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/api/test_transfer_money.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_transfer_money.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tests/ui/test_change_username.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_change_username.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/ui/test_create_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_create_user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tests/ui/test_transfer_money.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_transfer_money.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tests/ui/test_user_deposit_money.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_user_deposit_money.py" afterDir="false" />
     </list>
@@ -39,74 +59,80 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for deposit_money_by_user_test.TestDepositMoney.test_deposit_money.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestChangeUsername.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info_negative.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money_negative.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestUserChangeUsername.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestUserChangeUsername.test_user_change_username.executor": "Run",
-    "Python tests.Python tests for test_change_username.TestUserChangeUsername.test_user_change_username_empty_value.executor": "Run",
-    "Python tests.Python tests for test_create_user.TestCreateUser.test_admin_can_create_user.executor": "Run",
-    "Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money.executor": "Run",
-    "Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money_negative.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_deposit_money.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_again_transfer_money_empty_amount_field.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_insufficient_funds.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_empty_fields.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money_negative.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_again_transfer_money.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_new_transfer_money.executor": "Run",
-    "Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_transfer_money.executor": "Run",
-    "Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.executor": "Run",
-    "Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_negative_user_deposit_0_money.executor": "Run",
-    "Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_negative_user_has_no_account_deposit_money.executor": "Run",
-    "Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_user_deposit_money.executor": "Run",
-    "Python tests.Python tests in test_change_username.py.executor": "Run",
-    "Python tests.Python tests in test_deposit_money_by_user.py.executor": "Run",
-    "Python tests.Python tests in test_transfer_money.py.executor": "Run",
-    "Python.BankAlerts.executor": "Run",
-    "Python.config.executor": "Run",
-    "Python.create_user_request.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "ui__s",
-    "last_opened_file_path": "D:/PythonProjects/nb_bank/src/main/api/requests",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for deposit_money_by_user_test.TestDepositMoney.test_deposit_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestChangeUsername.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info_negative.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestChangeUsername.test_deposit_money_negative.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestUserChangeUsername.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestUserChangeUsername.test_user_change_username.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_change_username.TestUserChangeUsername.test_user_change_username_empty_value.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_create_user.TestCreateUser.test_admin_can_create_user.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_deposit_money_by_user.TestDepositMoney.test_deposit_money_negative.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_deposit_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_again_transfer_money_empty_amount_field.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_insufficient_funds.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_empty_fields.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_transfer_money_negative.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_again_transfer_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_new_transfer_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_transfer_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_negative_user_deposit_0_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_negative_user_has_no_account_deposit_money.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_user_deposit_money.executor&quot;: &quot;Debug&quot;,
+    &quot;Python tests.Python tests in test_change_username.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_deposit_money_by_user.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_transfer_money.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.BankAlerts.executor&quot;: &quot;Run&quot;,
+    &quot;Python.config.executor&quot;: &quot;Run&quot;,
+    &quot;Python.create_user_request.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ui__s&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/PythonProjects/nb_bank/src/main/api/requests&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;PLAIN_TEXT&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PythonProjects\nb_bank\src\main\api\requests" />
       <recent name="D:\PythonProjects\nb_bank\src\main\api\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PythonProjects\nb_bank\infrastructure" />
       <recent name="D:\PythonProjects\nb_bank\src\main\ui\Pages" />
       <recent name="D:\PythonProjects\nb_bank\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_empty_fields">
-    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_empty_fields" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info">
+    <configuration name="Python tests for test_change_username.TestChangeUsername.test_change_user_info" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests/ui" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests/api" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_empty_fields&quot;" />
+      <option name="_new_target" value="&quot;test_change_username.TestChangeUsername.test_change_user_info&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_user_again_transfer_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_negative_user_again_transfer_money_empty_amount_field" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -117,11 +143,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_user_again_transfer_money&quot;" />
+      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_negative_user_again_transfer_money_empty_amount_field&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_user_new_transfer_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_insufficient_funds" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -132,11 +158,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_user_new_transfer_money&quot;" />
+      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_insufficient_funds&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_user_deposit_money.TestUserDepositMoney" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -147,7 +173,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_user_deposit_money.TestUserDepositMoney&quot;" />
+      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -168,11 +194,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_empty_fields" />
-        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_again_transfer_money" />
-        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_user_new_transfer_money" />
+        <item itemvalue="Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info" />
         <item itemvalue="Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_user_deposit_money" />
-        <item itemvalue="Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney" />
+        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_again_transfer_money_empty_amount_field" />
+        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_insufficient_funds" />
+        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check" />
       </list>
     </recent_temporary>
   </component>
@@ -240,7 +266,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761160039947</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="2st commit - ui_s">
+      <option name="closed" value="true" />
+      <created>1761592466321</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1761592466321</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -250,6 +284,7 @@
     <MESSAGE value="1st commit" />
     <MESSAGE value="1st commit - ui_j" />
     <MESSAGE value="1st commit - ui_m" />
-    <option name="LAST_COMMIT_MESSAGE" value="1st commit - ui_m" />
+    <MESSAGE value="2st commit - ui_s" />
+    <option name="LAST_COMMIT_MESSAGE" value="2st commit - ui_s" />
   </component>
 </project>

@@ -10,6 +10,7 @@ class TestTransferMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_user_new_transfer_money(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
@@ -54,6 +55,7 @@ class TestTransferMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_user_again_transfer_money(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
@@ -106,6 +108,7 @@ class TestTransferMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_negative_user_new_transfer_money_empty_fields(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
@@ -143,6 +146,7 @@ class TestTransferMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_negative_user_new_transfer_money_no_confirm_check(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
@@ -184,6 +188,7 @@ class TestTransferMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_negative_user_new_transfer_insufficient_funds(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
@@ -226,6 +231,7 @@ class TestTransferMoney:
     @pytest.mark.browsers(["chrome"])
     @pytest.mark.usefixtures('setup_user_session')
     @pytest.mark.user_session(count=1)
+    @pytest.mark.ui
     def test_negative_user_again_transfer_money_empty_amount_field(self):
         # Получаем первого пользователя из SessionStorage
         user_data = SessionStorage.get_user(0)
