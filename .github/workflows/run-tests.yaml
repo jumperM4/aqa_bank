@@ -29,4 +29,4 @@ jobs: # аналог этапов
           tree -L 3 || find . -maxdepth 3 -print
 
       - name: Run tests
-        run: bash infrastructure/run-tests-with-docker-compose.sh
+        run: cd infrastructure && bash ./run-tests-with-docker-compose.sh

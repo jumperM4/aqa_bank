@@ -5,8 +5,6 @@ IMAGE_NAME="jumper32/nbank-tests:latest"
 TIMESTAMP=$(date +"%Y%m%d_%H%M")
 TEST_OUTPUT_DIR="test-output/$TIMESTAMP"
 
-echo $(pwd) && $(ls)
-
 # Создаем директорию для отчетов
 mkdir -p "$TEST_OUTPUT_DIR"
 
