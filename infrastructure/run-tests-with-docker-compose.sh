@@ -5,6 +5,8 @@ IMAGE_NAME="jumper32/nbank-tests:latest"
 TIMESTAMP=$(date +"%Y%m%d_%H%M")
 TEST_OUTPUT_DIR="test-output/$TIMESTAMP"
 
+echo $(pwd) && $(ls)
+
 # Создаем директорию для отчетов
 mkdir -p "$TEST_OUTPUT_DIR"
 
@@ -13,7 +15,7 @@ echo "Остановка предыдущих контейнеров..."
 docker compose down
 
 # Загружаем образы браузеров
-echo "Загрузка образов браузеров... + $(pwd)"
+echo "Загрузка образов браузеров..."
 if [ -f "./config/browsers.json" ]; then
     # Используем sed вместо grep -P для совместимости
     sed -n 's/.*"image"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "./config/browsers.json" | while read -r image; do
