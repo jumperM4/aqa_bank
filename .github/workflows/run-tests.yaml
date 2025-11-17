@@ -1,0 +1,15 @@
+name: Run tests
+
+# Триггер
+on: [ push, workflow_dispatch ]
+
+jobs: # аналог этапов
+  run-tests:
+    name: Set up services (review apps) and run API and UI tests
+    runs-on: ubuntu-latest
+    steps: # Шаги конкретной job
+      - name: Checkout repository # Копируем файлы репо внутрь CI агента
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: bash infrastructure/run-tests-with-docker-compose.sh

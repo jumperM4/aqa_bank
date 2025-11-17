@@ -4,31 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="2st commit - ui_s">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/config/browsers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/config/frontend-nginx.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/config/nginx.conf" afterDir="false" />
+    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="commit 16.11.25">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/run-tests.yaml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/infrastructure/desc.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/docker-compose.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/restart_docker.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/run-tests-with-docker-compose.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/push-tests.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run-tests.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/api/configs/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/configs/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/api/fixtures/objects_fixtures.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/fixtures/objects_fixtures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/api/test_change_username.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_change_username.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/api/test_deposit_money_by_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_deposit_money_by_user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/api/test_transfer_money.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/api/test_transfer_money.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/ui/test_change_username.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_change_username.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/ui/test_create_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_create_user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/ui/test_transfer_money.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_transfer_money.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/ui/test_user_deposit_money.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_user_deposit_money.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761592466321</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="commit 16.11.25">
+      <option name="closed" value="true" />
+      <created>1763300679292</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1763300679292</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -285,6 +272,7 @@
     <MESSAGE value="1st commit - ui_j" />
     <MESSAGE value="1st commit - ui_m" />
     <MESSAGE value="2st commit - ui_s" />
-    <option name="LAST_COMMIT_MESSAGE" value="2st commit - ui_s" />
+    <MESSAGE value="commit 16.11.25" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit 16.11.25" />
   </component>
 </project>
