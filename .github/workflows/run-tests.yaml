@@ -11,5 +11,22 @@ jobs: # аналог этапов
       - name: Checkout repository # Копируем файлы репо внутрь CI агента
         uses: actions/checkout@v4
 
+      - name: Debug - List files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo ""
+          echo "Files in current directory:"
+          ls -la
+          echo ""
+          echo "Files in infrastructure:"
+          ls -la infrastructure/
+          echo ""
+          echo "Files in infrastructure/config:"
+          ls -la infrastructure/config/
+          echo ""
+          echo "Tree structure:"
+          tree -L 3 || find . -maxdepth 3 -print
+
       - name: Run tests
         run: bash infrastructure/run-tests-with-docker-compose.sh
