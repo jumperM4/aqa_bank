@@ -14,6 +14,7 @@ docker compose down
 
 # Загружаем образы браузеров
 echo "Загрузка образов браузеров..."
+echo pwd
 if [ -f "./config/browsers.json" ]; then
     # Используем sed вместо grep -P для совместимости
     sed -n 's/.*"image"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "./config/browsers.json" | while read -r image; do
