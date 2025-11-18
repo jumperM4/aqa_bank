@@ -48,7 +48,7 @@ echo "=== Тестирование авторизации admin ==="
 
 # Попытка создать пользователя напрямую
 echo "Попытка 1: Basic auth admin:admin"
-curl -v -X POST http://backend:4111/api/v1/admin/users \
+curl -v -X POST http://localhost:4111/api/v1/admin/users \
   -H "Authorization: Basic YWRtaW46YWRtaW4=" \
   -H "Content-Type: application/json" \
   -d '{"username":"testUser1234","password":"testPass123$"}' 2>&1 | grep -E "(HTTP|Authorization|401|201|403)"
