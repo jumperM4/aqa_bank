@@ -38,31 +38,6 @@ docker compose up -d
 echo "Ожидание готовности сервисов..."
 sleep 15
 
-# Проверяем статус всех контейнеров
-echo "Проверка статуса контейнеров..."
-sleep 5
-docker ps -a | grep infrastructure
-
-# После ожидания готовности backend, перед запуском тестов
-echo "=== Тестирование авторизации admin ==="
-
-# Попытка создать пользователя напрямую
-echo "Попытка 1: Basic auth admin:admin"
-curl -v -X POST http://localhost:4111/api/v1/admin/users \
-  -H "Authorization: Basic YWRtaW46YWRtaW4=" \
-  -H "Content-Type: application/json" \
-  -d '{"username":"testUser1234","password":"testPass123$"}' 2>&1 | grep -E "(HTTP|Authorization|401|201|403)"
-
-echo ""
-echo "Попытка 2: Без авторизации"
-curl -v -X POST http://localhost:4111/api/v1/admin/users \
-  -H "Content-Type: application/json" \
-  -d '{"username":"testuser2","password":"testpass123"}' 2>&1 | grep -E "(HTTP|401|201|403)"
-
-echo ""
-echo "=== Полный Backend log после ошибки ==="
-docker logs infrastructure-backend-1 2>&1 | tail -50
-
 # Запуск API тестов
 echo "Запуск API тестов..."
 docker run --rm \
