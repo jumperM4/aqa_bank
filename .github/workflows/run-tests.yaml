@@ -27,6 +27,8 @@ jobs: # аналог этапов
           echo ""
           echo "Tree structure:"
           tree -L 3 || find . -maxdepth 3 -print
+          echo "Ищем config.properties:"
+          ls -la resources
 
       - name: Run tests
         run: cd infrastructure && bash ./run-tests-with-docker-compose.sh
