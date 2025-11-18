@@ -43,9 +43,21 @@ echo "Проверка статуса контейнеров..."
 sleep 5
 docker ps -a | grep infrastructure
 
-# Проверяем логи backend
-echo "=== Backend logs ==="
-docker logs infrastructure-backend-1 2>&1 || echo "Backend контейнер не существует или упал!"
+# После ожидания готовности backend, перед запуском тестов
+echo "=== Тестирование авторизации admin ==="
+
+# Попытка создать пользователя напрямую
+echo "Попытка 1: Basic auth admin:admin"
+curl -v -X POST http://backend:4111/api/v1/admin/users \
+  -H "Authorization: Basic YWRtaW46YWRtaW4=" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"testUser1234","password":"testPass123$"}' 2>&1 | grep -E "(HTTP|Authorization|401|201|403)"
+
+echo ""
+echo "Попытка 2: Без авторизации"
+curl -v -X POST http://localhost:4111/api/v1/admin/users \
+  -H "Content-Type: application/json" \
+  -d '{"username":"testuser2","password":"testpass123"}' 2>&1 | grep -E "(HTTP|401|201|403)"
 
 # Запуск API тестов
 echo "Запуск API тестов..."
