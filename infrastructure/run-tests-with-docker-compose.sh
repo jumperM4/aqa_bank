@@ -38,6 +38,15 @@ docker compose up -d
 echo "Ожидание готовности сервисов..."
 sleep 15
 
+# Проверяем статус всех контейнеров
+echo "Проверка статуса контейнеров..."
+sleep 5
+docker ps -a | grep infrastructure
+
+# Проверяем логи backend
+echo "=== Backend logs ==="
+docker logs infrastructure-backend-1 2>&1 || echo "Backend контейнер не существует или упал!"
+
 # Запуск API тестов
 echo "Запуск API тестов..."
 docker run --rm \
