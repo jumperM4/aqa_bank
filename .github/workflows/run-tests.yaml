@@ -30,5 +30,19 @@ jobs: # аналог этапов
           echo "Ищем config.properties:"
           ls -la resources
 
+      - name: Check backend logs
+        if: always()
+        run: |
+          echo "=== Backend logs ==="
+          docker logs infrastructure-backend-1
+
+      - name: Test backend manually
+        run: |
+          echo "Testing backend auth..."
+          curl -v -X POST http://backend:4111/api/v1/admin/users \
+            -H "Authorization: Basic YWRtaW46YWRtaW4=" \
+            -H "Content-Type: application/json" \
+            -d '{"username":"testUser12","password":"testPass12%"}'
+
       - name: Run tests
         run: cd infrastructure && bash ./run-tests-with-docker-compose.sh
