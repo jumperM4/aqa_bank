@@ -11,7 +11,7 @@ def created_objects():
     objects: List[Any] = []
     yield objects
 
-    cleanup_objects(objects)
+    # cleanup_objects(objects)
 
 
 def cleanup_objects(objects: List[Any]):
