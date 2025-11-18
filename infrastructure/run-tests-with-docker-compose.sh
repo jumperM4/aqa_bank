@@ -59,6 +59,10 @@ curl -v -X POST http://localhost:4111/api/v1/admin/users \
   -H "Content-Type: application/json" \
   -d '{"username":"testuser2","password":"testpass123"}' 2>&1 | grep -E "(HTTP|401|201|403)"
 
+echo ""
+echo "=== Полный Backend log после ошибки ==="
+docker logs infrastructure-backend-1 2>&1 | tail -50
+
 # Запуск API тестов
 echo "Запуск API тестов..."
 docker run --rm \

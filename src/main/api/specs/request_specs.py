@@ -28,8 +28,6 @@ class RequestSpecs:
         headers = RequestSpecs.default_req_headers()
         headers['Authorization'] = 'Basic YWRtaW46YWRtaW4='
 
-        print(f"DEBUG: Sending headers: {headers}")
-
         return headers
 
     @staticmethod
