@@ -30,6 +30,18 @@ jobs: # аналог этапов
           echo "Ищем config.properties:"
           ls -la resources
 
+      - name: Check container status
+        if: always()
+        run: |
+          echo "=== Container status ==="
+          docker ps -a
+          
+          echo "=== Backend logs ==="
+          docker logs infrastructure-backend-1 || echo "Backend not found"
+          
+          echo "=== Docker compose ps ==="
+          docker compose -f infrastructure/docker-compose.yaml ps
+
       - name: Check backend logs
         if: always()
         run: |
