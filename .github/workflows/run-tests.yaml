@@ -10,6 +10,12 @@ jobs: # аналог этапов
     steps: # Шаги конкретной job
       - name: Checkout repository # Копируем файлы репо внутрь CI агента
         uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
 #      - name: Debug - List files
 #        run: |
 #          echo "Current directory:"
@@ -28,5 +34,8 @@ jobs: # аналог этапов
 #          tree -L 3 || find . -maxdepth 3 -print
 #          echo "Ищем config.properties:"
 #          ls -la resources
+      - name: Run containers
+        run: cd infrastructure && bash ./restart_docker.sh
+
       - name: Run tests
-        run: cd infrastructure && bash ./run-tests-with-docker-compose.sh
+        run: bash ./run-tests-with-docker-compose.sh

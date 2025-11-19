@@ -8,31 +8,31 @@ TEST_OUTPUT_DIR="test-output/$TIMESTAMP"
 # Создаем директорию для отчетов
 mkdir -p "$TEST_OUTPUT_DIR"
 
-# Останавливаем старые контейнеры
-echo "Остановка предыдущих контейнеров..."
-docker compose down
+## Останавливаем старые контейнеры
+#echo "Остановка предыдущих контейнеров..."
+#docker compose down
 
-# Загружаем образы браузеров
-echo "Загрузка образов браузеров..."
-if [ -f "./config/browsers.json" ]; then
-    # Используем sed вместо grep -P для совместимости
-    sed -n 's/.*"image"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "./config/browsers.json" | while read -r image; do
-        if [ -n "$image" ]; then
-            echo "Загрузка: $image"
-            docker pull "$image"
-        fi
-    done
-else
-    echo "Файл ./config/browsers.json не найден, пропускаем загрузку браузеров"
-fi
+## Загружаем образы браузеров
+#echo "Загрузка образов браузеров..."
+#if [ -f "./config/browsers.json" ]; then
+#    # Используем sed вместо grep -P для совместимости
+#    sed -n 's/.*"image"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "./config/browsers.json" | while read -r image; do
+#        if [ -n "$image" ]; then
+#            echo "Загрузка: $image"
+#            docker pull "$image"
+#        fi
+#    done
+#else
+#    echo "Файл ./config/browsers.json не найден, пропускаем загрузку браузеров"
+#fi
 
 # Загружаем образ с тестами
 echo "Загрузка образа с тестами..."
 docker pull "$IMAGE_NAME"
 
-# Запускаем окружение
-echo "Запуск окружения..."
-docker compose up -d
+## Запускаем окружение
+#echo "Запуск окружения..."
+#docker compose up -d
 
 # Ждем готовности
 echo "Ожидание готовности сервисов..."
