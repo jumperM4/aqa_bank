@@ -9,26 +9,32 @@ jobs: # аналог этапов
     runs-on: ubuntu-latest
     steps: # Шаги конкретной job
       - name: Checkout repository # Копируем файлы репо внутрь CI агента
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Debug - List files
-        run: |
-          echo "Current directory:"
-          pwd
-          echo ""
-          echo "Files in current directory:"
-          ls -la
-          echo ""
-          echo "Files in infrastructure:"
-          ls -la infrastructure/
-          echo ""
-          echo "Files in infrastructure/config:"
-          ls -la infrastructure/config/
-          echo ""
-          echo "Tree structure:"
-          tree -L 3 || find . -maxdepth 3 -print
-          echo "Ищем config.properties:"
-          ls -la resources
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+
+#      - name: Debug - List files
+#        run: |
+#          echo "Current directory:"
+#          pwd
+#          echo ""
+#          echo "Files in current directory:"
+#          ls -la
+#          echo ""
+#          echo "Files in infrastructure:"
+#          ls -la infrastructure/
+#          echo ""
+#          echo "Files in infrastructure/config:"
+#          ls -la infrastructure/config/
+#          echo ""
+#          echo "Tree structure:"
+#          tree -L 3 || find . -maxdepth 3 -print
+#          echo "Ищем config.properties:"
+#          ls -la resources
 
       - name: Run tests
         run: cd infrastructure && bash ./run-tests-with-docker-compose.sh
