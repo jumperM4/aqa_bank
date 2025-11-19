@@ -10,9 +10,6 @@ jobs: # аналог этапов
     steps: # Шаги конкретной job
       - name: Checkout repository # Копируем файлы репо внутрь CI агента
         uses: actions/checkout@v5
-
-      - name: Run containers
-        run: cd infrastructure && bash ./restart_docker.sh
 #      - name: Debug - List files
 #        run: |
 #          echo "Current directory:"
