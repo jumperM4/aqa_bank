@@ -28,6 +28,7 @@ class RequestSpecs:
         headers = RequestSpecs.default_req_headers()
         auth_header = RequestSpecs.getUserAuthHeader(username=Config.get("admin.username"), password=Config.get("admin.password"))
         headers['Authorization'] = auth_header
+        print(headers)
         # 'Basic YWRtaW46YWRtaW4='
         return headers
 
