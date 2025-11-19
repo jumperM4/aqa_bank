@@ -26,8 +26,9 @@ class RequestSpecs:
     @staticmethod
     def admin_auth_spec():
         headers = RequestSpecs.default_req_headers()
-        headers['Authorization'] = 'Basic YWRtaW46YWRtaW4='
-
+        auth_header = RequestSpecs.getUserAuthHeader(username=Config.get("admin.username"), password=Config.get("admin.password"))
+        headers['Authorization'] = auth_header
+        # 'Basic YWRtaW46YWRtaW4='
         return headers
 
     @staticmethod

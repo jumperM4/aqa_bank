@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="commit 16.11.25">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/run-tests.yaml" afterDir="false" />
+    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="commit 19.11.25">
       <change afterPath="$PROJECT_DIR$/infrastructure/desc.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -24,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ui_m" />
+        <entry key="$PROJECT_DIR$" value="ui_s" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -74,7 +73,7 @@
     &quot;Python.create_user_request.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ui__s&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/PythonProjects/nb_bank/src/main/api/requests&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   },
@@ -261,7 +260,143 @@
       <option name="project" value="LOCAL" />
       <updated>1763300679292</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="commit 17.11.25">
+      <option name="closed" value="true" />
+      <created>1763407679827</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1763407679827</updated>
+    </task>
+    <task id="LOCAL-00010" summary="commit 17.11.25">
+      <option name="closed" value="true" />
+      <created>1763407802724</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1763407802724</updated>
+    </task>
+    <task id="LOCAL-00011" summary="commit 17.11.25">
+      <option name="closed" value="true" />
+      <created>1763408706340</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1763408706340</updated>
+    </task>
+    <task id="LOCAL-00012" summary="commit 17.11.25">
+      <option name="closed" value="true" />
+      <created>1763409106729</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763409106729</updated>
+    </task>
+    <task id="LOCAL-00013" summary="commit 17.11.25">
+      <option name="closed" value="true" />
+      <created>1763409350303</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1763409350303</updated>
+    </task>
+    <task id="LOCAL-00014" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763483662402</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1763483662402</updated>
+    </task>
+    <task id="LOCAL-00015" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763488143425</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1763488143425</updated>
+    </task>
+    <task id="LOCAL-00016" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763489563593</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1763489563593</updated>
+    </task>
+    <task id="LOCAL-00017" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763490174548</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1763490174548</updated>
+    </task>
+    <task id="LOCAL-00018" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763490523629</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763490523629</updated>
+    </task>
+    <task id="LOCAL-00019" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763490658175</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1763490658175</updated>
+    </task>
+    <task id="LOCAL-00020" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763490950091</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1763490950091</updated>
+    </task>
+    <task id="LOCAL-00021" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763491084836</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1763491084836</updated>
+    </task>
+    <task id="LOCAL-00022" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763491369076</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1763491369076</updated>
+    </task>
+    <task id="LOCAL-00023" summary="commit 18.11.25">
+      <option name="closed" value="true" />
+      <created>1763492311098</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1763492311098</updated>
+    </task>
+    <task id="LOCAL-00024" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763576814758</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1763576814758</updated>
+    </task>
+    <task id="LOCAL-00025" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763577702016</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1763577702016</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -273,6 +408,9 @@
     <MESSAGE value="1st commit - ui_m" />
     <MESSAGE value="2st commit - ui_s" />
     <MESSAGE value="commit 16.11.25" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit 16.11.25" />
+    <MESSAGE value="commit 17.11.25" />
+    <MESSAGE value="commit 18.11.25" />
+    <MESSAGE value="commit 19.11.25" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit 19.11.25" />
   </component>
 </project>
