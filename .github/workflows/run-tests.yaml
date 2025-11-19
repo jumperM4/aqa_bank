@@ -38,4 +38,4 @@ jobs: # аналог этапов
         run: cd infrastructure && bash ./restart_docker.sh
 
       - name: Run tests
-        run: bash ./run-tests-with-docker-compose.sh
+        run: cd infrastructure && bash ./run-tests-with-docker-compose.sh
