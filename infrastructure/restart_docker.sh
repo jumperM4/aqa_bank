@@ -30,3 +30,6 @@ fi
 
 echo "Запустить docker compose"
 docker compose up -d
+
+echo "Ожидание готовности сервисов..."
+sleep 21

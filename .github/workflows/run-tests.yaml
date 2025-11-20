@@ -11,11 +11,14 @@ jobs: # аналог этапов
       - name: Checkout repository # Копируем файлы репо внутрь CI агента
         uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
-      - run: pip install -r requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 #      - name: Debug - List files
 #        run: |
 #          echo "Current directory:"
@@ -37,5 +40,27 @@ jobs: # аналог этапов
       - name: Run containers
         run: cd infrastructure && bash ./restart_docker.sh
 
-      - name: Run tests
-        run: cd infrastructure && bash ./run-tests-with-docker-compose.sh
+      - name: Run API tests
+        env:
+          SERVER: http://localhost:4111/api
+          API_VERSION: /v1
+          TEST_PROFILE: api
+        run: |
+          mkdir -p test-output
+          echo ">>> Running API tests"
+          pytest -s -v -m api --html=test-output/api-report.html --self-contained-html 2>&1 | tee test-output/api-run.log
+
+      - name: Run UI tests
+        env:
+          SERVER: http://localhost:4111/api
+          API_VERSION: /v1
+          UI_REMOTE_URL: http://localhost:4444/wd/hub
+          UI_BASE_URL: http://localhost
+          TEST_PROFILE: ui
+        run: |
+          echo ">>> Running UI tests"
+          pytest -s -v -m ui --html=test-output/ui-report.html --self-contained-html 2>&1 | tee test-output/ui-run.log
+
+      - name: Stop services
+        if: always()
+        run: cd infrastructure && docker compose down -v
