@@ -55,7 +55,7 @@ jobs: # аналог этапов
           SERVER: http://localhost:4111/api
           API_VERSION: /v1
           UI_REMOTE_URL: http://localhost:4444/wd/hub
-          UI_BASE_URL: http://localhost
+          UI_BASE_URL: http://nginx
           TEST_PROFILE: ui
         run: |
           echo ">>> Running UI tests"
