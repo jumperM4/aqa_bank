@@ -1,14 +1,99 @@
+#name: Run tests
+#
+## Триггер
+#on: [ push, workflow_dispatch ]
+#
+#jobs: # аналог этапов
+#  run-tests:
+#    name: Set up services (review apps) and run API and UI tests
+#    runs-on: ubuntu-latest
+#    steps: # Шаги конкретной job
+#      - name: Checkout repository # Копируем файлы репо внутрь CI агента
+#        uses: actions/checkout@v5
+#
+#      - name: Setup Python
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: '3.11'
+#          cache: 'pip'
+#
+#      - name: Install dependencies
+#        run: pip install -r requirements.txt
+##      - name: Debug - List files
+##        run: |
+##          echo "Current directory:"
+##          pwd
+##          echo ""
+##          echo "Files in current directory:"
+##          ls -la
+##          echo ""
+##          echo "Files in infrastructure:"
+##          ls -la infrastructure/
+##          echo ""
+##          echo "Files in infrastructure/config:"
+##          ls -la infrastructure/config/
+##          echo ""
+##          echo "Tree structure:"
+##          tree -L 3 || find . -maxdepth 3 -print
+##          echo "Ищем config.properties:"
+##          ls -la resources
+#      - name: Run containers
+#        run: cd infrastructure && bash ./restart_docker.sh
+#
+#      - name: Run API tests
+#        env:
+#          SERVER: http://localhost:4111/api
+#          API_VERSION: /v1
+#          TEST_PROFILE: api
+#        run: |
+#          mkdir -p test-output
+#          echo ">>> Running API tests"
+#          pytest -s -v -m api --html=test-output/api-report.html --self-contained-html 2>&1 | tee test-output/api-run.log
+#
+#      - name: Run UI tests
+#        env:
+#          SERVER: http://localhost:4111/api
+#          API_VERSION: /v1
+#          UI_REMOTE_URL: http://localhost:4444/wd/hub
+#          UI_BASE_URL: http://nginx
+#          TEST_PROFILE: ui
+#        run: |
+#          echo ">>> Running UI tests"
+#          pytest -s -v -m ui --html=test-output/ui-report.html --self-contained-html 2>&1 | tee test-output/ui-run.log
+#
+#      - name: Stop services
+#        if: always()
+#        run: cd infrastructure && docker compose down -v
+
 name: Run tests
 
-# Триггер
 on: [ push, workflow_dispatch ]
 
-jobs: # аналог этапов
+jobs:
+  # Job для проверки изменений в src/
+  check-changes:
+    name: Check if src folder changed
+    runs-on: ubuntu-latest
+    outputs:
+      src_changed: ${{ steps.filter.outputs.src }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Check for changes in src/
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            src:
+              - 'src/**'
+
+  # Job для тестов
   run-tests:
     name: Set up services (review apps) and run API and UI tests
     runs-on: ubuntu-latest
-    steps: # Шаги конкретной job
-      - name: Checkout repository # Копируем файлы репо внутрь CI агента
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v5
 
       - name: Setup Python
@@ -19,24 +104,7 @@ jobs: # аналог этапов
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-#      - name: Debug - List files
-#        run: |
-#          echo "Current directory:"
-#          pwd
-#          echo ""
-#          echo "Files in current directory:"
-#          ls -la
-#          echo ""
-#          echo "Files in infrastructure:"
-#          ls -la infrastructure/
-#          echo ""
-#          echo "Files in infrastructure/config:"
-#          ls -la infrastructure/config/
-#          echo ""
-#          echo "Tree structure:"
-#          tree -L 3 || find . -maxdepth 3 -print
-#          echo "Ищем config.properties:"
-#          ls -la resources
+
       - name: Run containers
         run: cd infrastructure && bash ./restart_docker.sh
 
@@ -61,6 +129,54 @@ jobs: # аналог этапов
           echo ">>> Running UI tests"
           pytest -s -v -m ui --html=test-output/ui-report.html --self-contained-html 2>&1 | tee test-output/ui-run.log
 
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: test-output/
+
       - name: Stop services
         if: always()
         run: cd infrastructure && docker compose down -v
+
+  # Job для сборки и отправки Docker образа
+  build-and-push:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest
+    needs: [check-changes, run-tests]
+    if: needs.check-changes.outputs.src_changed == 'true'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract commit hash
+        id: vars
+        run: echo "commit_hash=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/nbank-tests:${{ steps.vars.outputs.commit_hash }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/nbank-tests:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Image summary
+        run: |
+          echo "✓ Docker image pushed successfully"
+          echo "Image: ${{ secrets.DOCKERHUB_USERNAME }}/nbank-tests:${{ steps.vars.outputs.commit_hash }}"
+          echo "Commit: $GITHUB_SHA"
