@@ -108,17 +108,18 @@ jobs:
       - name: Run containers
         run: cd infrastructure && bash ./restart_docker.sh
 
-      - name: Run API tests
+      - name: Run API tests with Allure
         env:
           SERVER: http://localhost:4111/api
           API_VERSION: /v1
           TEST_PROFILE: api
         run: |
           mkdir -p test-output
+          mkdir -p test-output/allure-api-results # Для хранения allure-результатов
           echo ">>> Running API tests"
-          pytest -s -v -m api --html=test-output/api-report.html --self-contained-html 2>&1 | tee test-output/api-run.log
+          pytest -s -v -m api --alluredir=test-output/allure-api-results 2>&1 | tee test-output/api-run.log
 
-      - name: Run UI tests
+      - name: Run UI tests with Allure
         env:
           SERVER: http://localhost:4111/api
           API_VERSION: /v1
@@ -126,15 +127,39 @@ jobs:
           UI_BASE_URL: http://nginx
           TEST_PROFILE: ui
         run: |
+          mkdir -p test-output/allure-ui-results # Для хранения allure-результатов
           echo ">>> Running UI tests"
-          pytest -s -v -m ui --html=test-output/ui-report.html --self-contained-html 2>&1 | tee test-output/ui-run.log
+          pytest -s -v -m ui --alluredir=test-output/allure-ui-results 2>&1 | tee test-output/ui-run.log
 
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
-          path: test-output/
+          path: |
+            test-output/
+            test-output/allure-api-results/
+            test-output/allure-ui-results/
+
+      # Для автоматической генерации HTML-отчета можно использовать дополнительный step (Allure commandline)
+      - name: Generate Allure HTML reports
+        if: always()
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.25.0/allure-2.25.0.tgz
+          tar -xzf allure-2.25.0.tgz
+          ./allure-2.25.0/bin/allure generate test-output/allure-api-results -o test-output/allure-api-report --clean
+          ./allure-2.25.0/bin/allure generate test-output/allure-ui-results -o test-output/allure-ui-report --clean
+        # Комментарий: Генерируем html-отчеты
+
+      - name: Upload Allure HTML reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-html-reports
+          path: |
+            test-output/allure-api-report/
+            test-output/allure-ui-report/
+          # Комментарий: Артефакт для сгенерированных html-отчетов
 
       - name: Stop services
         if: always()

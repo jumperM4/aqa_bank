@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selene import browser, be
 
@@ -18,24 +19,41 @@ class TestUserChangeUsername:
         user_data = SessionStorage.get_user(0)
         user_steps = SessionStorage.get_steps(0)
 
-        (UserDashboardPage()
-         .open()
-         .clickUserInfo()
-         .get_page(page_class=EditProfilePage)
-         .getEditProfileTitle.should(be.visible)
-         )
+        with allure.step("Открыть профиль пользователя"):
+            UserDashboardPage().open().clickUserInfo().get_page(page_class=EditProfilePage).getEditProfileTitle.should(
+                be.visible)
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="Открыта страница редактирования профиля",
+                attachment_type=allure.attachment_type.PNG,
+            )
 
-        (EditProfilePage()
-         .sendNewNameValue(value=UserTestData.NEW_USERNAME)
-         .clickSaveChangesBtn()
-         .check_alert_msg_and_accept(bank_alert=BankAlert.USERNAME_UPDATED_SUCCESSFULLY)
-         )
+        with allure.step("Изменить имя пользователя и сохранить"):
+            EditProfilePage().sendNewNameValue(
+                value=UserTestData.NEW_USERNAME).clickSaveChangesBtn().check_alert_msg_and_accept(
+                bank_alert=BankAlert.USERNAME_UPDATED_SUCCESSFULLY)
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="Имя пользователя изменено и сохранено",
+                attachment_type=allure.attachment_type.PNG,
+            )
 
-        browser.driver.refresh()
+        with allure.step("Обновить страницу после сохранения имени"):
+            browser.driver.refresh()
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="Страница после рефреша",
+                attachment_type=allure.attachment_type.PNG,
+            )
 
-        # Проверка что UI изменился
-        new_name = EditProfilePage().getUsername()
-        assert new_name == UserTestData.NEW_USERNAME
+        with allure.step("Проверить, что имя в UI изменилось"):
+            new_name = EditProfilePage().getUsername()
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="UI: имя пользователя изменилось",
+                attachment_type=allure.attachment_type.PNG,
+            )
+            assert new_name == UserTestData.NEW_USERNAME
 
         # Изменение имени на API
         get_customer_profile_response = user_steps.get_customer_profile(
@@ -52,23 +70,44 @@ class TestUserChangeUsername:
         user_data = SessionStorage.get_user(0)
         user_steps = SessionStorage.get_steps(0)
 
-        (UserDashboardPage()
-         .open()
-         .clickUserInfo()
-         .get_page(page_class=EditProfilePage)
-         .getEditProfileTitle.should(be.visible)
-         )
+        with allure.step("Открыть профиль пользователя"):
+            (UserDashboardPage()
+             .open()
+             .clickUserInfo()
+             .get_page(page_class=EditProfilePage)
+             .getEditProfileTitle.should(be.visible)
+             )
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="Открыта страница редактирования профиля",
+                attachment_type=allure.attachment_type.PNG
+            )
 
-        (EditProfilePage()
-         .clickSaveChangesBtn()
-         .check_alert_msg_and_accept(bank_alert=BankAlert.USERNAME_FIELD_REQUIRES_VALID_NAME)
-         )
+        with allure.step("Проверить и принять алерт при сохранении пустого имени"):
+            EditProfilePage().clickSaveChangesBtn().check_alert_msg_and_accept(
+                bank_alert=BankAlert.USERNAME_FIELD_REQUIRES_VALID_NAME)
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="Алерт на пустое имя",
+                attachment_type=allure.attachment_type.PNG,
+            )
 
-        browser.driver.refresh()
+        with allure.step("Обновить страницу после алерта"):
+            browser.driver.refresh()
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="Страница после рефреша",
+                attachment_type=allure.attachment_type.PNG,
+            )
 
-        # Проверка что UI НЕ изменился
-        new_name = EditProfilePage().getUsername()
-        assert new_name == "Noname"
+        with allure.step("Проверить, что имя в UI не изменилось"):
+            new_name = EditProfilePage().getUsername()
+            allure.attach(
+                browser.driver.get_screenshot_as_png(),
+                name="UI: имя не изменилось",
+                attachment_type=allure.attachment_type.PNG,
+            )
+            assert new_name == "Noname"
 
         # Проверка изменения имени на API
         get_customer_profile_response = user_steps.get_customer_profile_no_asserts(

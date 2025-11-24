@@ -8,20 +8,25 @@ from src.main.api.requests.skeleton.requesters.validated_crud_requester import V
 from src.main.api.specs.request_specs import RequestSpecs
 from src.main.api.specs.response_specs import ResponseSpecs
 from src.main.api.steps.base_steps import BaseSteps
+from src.main.common.helpers.step_logger import StepLogger
 
 
 class AdminSteps(BaseSteps):
     def create_user(self, user_request: CreateUserRequest):
-        create_user_response: CreateUserResponse = ValidatedCrudRequester(
-            request_spec=RequestSpecs.admin_auth_spec(),
-            response_spec=ResponseSpecs.entity_was_created(),
-            endpoint=Endpoint.ADMIN_CREATE_USER
-        ).post(user_request)
-        ModelAssertions(user_request, create_user_response).match()
+        def main_action():
+            create_user_response: CreateUserResponse = ValidatedCrudRequester(
+                request_spec=RequestSpecs.admin_auth_spec(),
+                response_spec=ResponseSpecs.entity_was_created(),
+                endpoint=Endpoint.ADMIN_CREATE_USER
+            ).post(user_request)
+            ModelAssertions(user_request, create_user_response).match()
 
-        self.created_objects.append(create_user_response)
+            self.created_objects.append(create_user_response)
 
-        return create_user_response
+            return create_user_response
+
+        step_title = f'Admin creates user'
+        return StepLogger().log_step(title=step_title, func=main_action)
 
     def create__invalid_user(self, user_request: CreateUserRequest, error_key: str, error_value: str):
         ValidatedCrudRequester(

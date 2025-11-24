@@ -18,45 +18,58 @@ from src.main.api.requests.skeleton.requesters.validated_crud_requester import V
 from src.main.api.specs.request_specs import RequestSpecs
 from src.main.api.specs.response_specs import ResponseSpecs
 from src.main.api.steps.base_steps import BaseSteps
+from src.main.common.helpers.step_logger import StepLogger
 
 
 class UserSteps(BaseSteps):
     def login(self, create_user_request: CreateUserRequest) -> LoginUserResponse:
-        login_request = LoginUserRequest(username=create_user_request.username, password=create_user_request.password)
-        login_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.unauth_spec(),
-            endpoint=Endpoint.LOGIN_USER,
-            response_spec=ResponseSpecs.request_returns_ok()
-        ).post(login_request)
-        ModelAssertions(login_request, login_response).match()
-        return login_response
+        def main_action():
+            login_request = LoginUserRequest(username=create_user_request.username, password=create_user_request.password)
+            login_response = ValidatedCrudRequester(
+                request_spec=RequestSpecs.unauth_spec(),
+                endpoint=Endpoint.LOGIN_USER,
+                response_spec=ResponseSpecs.request_returns_ok()
+            ).post(login_request)
+            ModelAssertions(login_request, login_response).match()
+            return login_response
+
+        step_title = f'User logins - username: {create_user_request.username}'
+        return StepLogger().log_step(title=step_title, func=main_action)
 
     def create_account(self, create_user_request: CreateUserRequest) -> CreateAccountResponse:
-        create_account_response: CreateAccountResponse = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.entity_was_created(),
-            endpoint=Endpoint.CREATE_USER_ACCOUNT
-        ).post()
+        def main_action():
+            create_account_response: CreateAccountResponse = ValidatedCrudRequester(
+                request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
+                                                         password=create_user_request.password),
+                response_spec=ResponseSpecs.entity_was_created(),
+                endpoint=Endpoint.CREATE_USER_ACCOUNT
+            ).post()
 
-        assert create_account_response.balance == 0
-        assert not create_account_response.transactions
-        return create_account_response
+            assert create_account_response.balance == 0
+            assert not create_account_response.transactions
+            return create_account_response
+
+        step_title = f'User creates account - username: {create_user_request.username}'
+        return StepLogger().log_step(title=step_title, func=main_action)
 
     def deposit_account(self, create_user_request: CreateUserRequest, create_account_response: CreateAccountResponse, balance: int) -> DepositAccountResponse:
-        deposit_account_request = DepositAccountRequest(id=create_account_response.id, balance=balance)
-        deposit_account_response = ValidatedCrudRequester(
-            request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
-                                                     password=create_user_request.password),
-            response_spec=ResponseSpecs.request_returns_ok(),
-            endpoint=Endpoint.DEPOSIT_USER_ACCOUNTS
-        ).post(deposit_account_request)
-        ModelAssertions(deposit_account_request, deposit_account_response).match()
+        def main_action():
+            deposit_account_request = DepositAccountRequest(id=create_account_response.id, balance=balance)
+            deposit_account_response = ValidatedCrudRequester(
+                request_spec=RequestSpecs.user_auth_spec(username=create_user_request.username,
+                                                         password=create_user_request.password),
+                response_spec=ResponseSpecs.request_returns_ok(),
+                endpoint=Endpoint.DEPOSIT_USER_ACCOUNTS
+            ).post(deposit_account_request)
+            ModelAssertions(deposit_account_request, deposit_account_response).match()
 
-        assert deposit_account_response.transactions
-        assert deposit_account_response.transactions[0].amount == balance
-        assert deposit_account_response.transactions[0].type == 'DEPOSIT'
-        return deposit_account_response
+            assert deposit_account_response.transactions
+            assert deposit_account_response.transactions[0].amount == balance
+            assert deposit_account_response.transactions[0].type == 'DEPOSIT'
+            return deposit_account_response
+
+        step_title = f'User deposits account - username: {create_user_request.username}'
+        return StepLogger().log_step(title=step_title, func=main_action)
 
     def deposit_account_negative(self,
                                  create_user_request: CreateUserRequest,

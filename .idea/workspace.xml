@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="commit 19.11.25">
+    <list default="true" id="73ddcc04-a2f8-40a6-b149-f96b4015439e" name="Changes" comment="commit 20.11.25-1">
       <change afterPath="$PROJECT_DIR$/infrastructure/desc.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/common/helpers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/common/helpers/step_logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/requests/skeleton/requesters/crud_requester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/requests/skeleton/requesters/crud_requester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/steps/admin_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/steps/admin_steps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/api/steps/user_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/api/steps/user_steps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/ui/test_change_username.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ui/test_change_username.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,12 +96,13 @@
       <recent name="D:\PythonProjects\nb_bank\src\main\api\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PythonProjects\nb_bank\allure-results" />
       <recent name="D:\PythonProjects\nb_bank\infrastructure" />
       <recent name="D:\PythonProjects\nb_bank\src\main\ui\Pages" />
       <recent name="D:\PythonProjects\nb_bank\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info">
+  <component name="RunManager" selected="Python tests.Python tests for test_change_username.TestUserChangeUsername.test_user_change_username_empty_value">
     <configuration name="Python tests for test_change_username.TestChangeUsername.test_change_user_info" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
@@ -107,6 +115,21 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_change_username.TestChangeUsername.test_change_user_info&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_change_username.TestUserChangeUsername.test_user_change_username_empty_value" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="nb_bank" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests/ui" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_change_username.TestUserChangeUsername.test_user_change_username_empty_value&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -140,21 +163,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="nb_bank" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests/ui" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="Python tests for test_user_deposit_money.TestUserDepositMoney.test_user_deposit_money" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="nb_bank" />
       <option name="ENV_FILES" value="" />
@@ -172,11 +180,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for test_change_username.TestUserChangeUsername.test_user_change_username_empty_value" />
         <item itemvalue="Python tests.Python tests for test_change_username.TestChangeUsername.test_change_user_info" />
         <item itemvalue="Python tests.Python tests for test_user_deposit_money.TestUserDepositMoney.test_user_deposit_money" />
         <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_again_transfer_money_empty_amount_field" />
         <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_insufficient_funds" />
-        <item itemvalue="Python tests.Python tests for test_transfer_money.TestTransferMoney.test_negative_user_new_transfer_money_no_confirm_check" />
       </list>
     </recent_temporary>
   </component>
@@ -396,7 +404,87 @@
       <option name="project" value="LOCAL" />
       <updated>1763577702016</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763578705765</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1763578705765</updated>
+    </task>
+    <task id="LOCAL-00027" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763579352061</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1763579352061</updated>
+    </task>
+    <task id="LOCAL-00028" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763579597600</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1763579597600</updated>
+    </task>
+    <task id="LOCAL-00029" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763579647440</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1763579647440</updated>
+    </task>
+    <task id="LOCAL-00030" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763580556476</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1763580556476</updated>
+    </task>
+    <task id="LOCAL-00031" summary="commit 19.11.25">
+      <option name="closed" value="true" />
+      <created>1763580653705</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1763580653705</updated>
+    </task>
+    <task id="LOCAL-00032" summary="commit 20.11.25">
+      <option name="closed" value="true" />
+      <created>1763662160966</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1763662160966</updated>
+    </task>
+    <task id="LOCAL-00033" summary="commit 20.11.25">
+      <option name="closed" value="true" />
+      <created>1763662816526</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1763662816526</updated>
+    </task>
+    <task id="LOCAL-00034" summary="commit 20.11.25">
+      <option name="closed" value="true" />
+      <created>1763663955139</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1763663955139</updated>
+    </task>
+    <task id="LOCAL-00035" summary="commit 20.11.25-1">
+      <option name="closed" value="true" />
+      <created>1763664272768</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1763664272768</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -411,6 +499,8 @@
     <MESSAGE value="commit 17.11.25" />
     <MESSAGE value="commit 18.11.25" />
     <MESSAGE value="commit 19.11.25" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit 19.11.25" />
+    <MESSAGE value="commit 20.11.25" />
+    <MESSAGE value="commit 20.11.25-1" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit 20.11.25-1" />
   </component>
 </project>
