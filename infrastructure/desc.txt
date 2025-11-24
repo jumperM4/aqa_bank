@@ -1,0 +1,36 @@
+Все контейнеры:
+
+1) backend
+docker run
+--hostname=bb18f61e9219
+--env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+--env=LANG=C.UTF-8 --env=JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
+--network=bridge
+--workdir=/app -p 4111:4111
+--restart=no
+--runtime=runc -d nobugsme/nbank:latest
+
+2) frontend
+nobugsme/nbank-ui:latest
++
+контейнер nginx - nginx:latest // nginx port 80 - 80
+
+3) контейнер selenoid
+docker run --hostname=e52d717e9909
+--env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+--network=bridge
+--workdir=/ -p 8080:8080
+--link selenoid:selenoid
+--restart=no
+--runtime=runc -d aerokube/selenoid-ui
+
+docker run --hostname=6468798ecf49
+--env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+--volume=//var/run/docker.sock:/var/run/docker.sock
+--network=bridge -p 4444:4444
+--restart=no --runtime=runc -d aerokube/selenoid:latest-release
+
+Шаги
+1. создать docker-compose.yaml
+2. описать каждый из докер контейнеров (образ, порт, последовательность, общая докер сеть)
+3. скрипт по поднятию всех докер контейнеров с помощью docker-compose
